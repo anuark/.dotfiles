@@ -62,8 +62,28 @@ call plug#end()
 " colorscheme onehalfdark
 colorscheme gruvbox
 
-autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR>
+" open netrw
+let g:NetrwIsOpen=0
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Explore
+    endif
+endfunction
 
+" Add your own mapping. For example:
+noremap <silent> <c-t> :call ToggleNetrw()<CR>
+nnoremap <C-i> :LspStop<CR>
+nnoremap <C-o> :LspStart<CR>
 
 " RainbowParen config
 let g:rbpt_colorpairs = [
@@ -177,10 +197,6 @@ xmap ga <Plug>(EasyAlign)
 
 " whitespace
 " autocmd FileType markdown,sql,c,cpp,python,ruby,javascript,html,java,coffee,less,scss,css,clojure,yaml,make autocmd BufWritePre <buffer> :exe '%s/\s\+$//e'
-
-au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufRead *.json.template set filetype=javascript
-au BufNewFile,BufRead *.json set filetype=javascript
 
 " Clojure
 let g:sexp_enable_insert_mode_mappings = 1
@@ -307,3 +323,11 @@ for _, lsp in pairs(servers) do
   }
 end
 EOF
+
+" Launch gopls when Go files are in use
+let g:LanguageClient_serverCommands = {
+       \ 'go': ['gopls']
+       \ }
+
+" Run gofmt on save
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
