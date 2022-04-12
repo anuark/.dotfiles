@@ -37,21 +37,23 @@ set cmdheight=2
 call plug#begin()
 Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
-Plug 'Chiel92/vim-autoformat'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
-Plug 'qpkorr/vim-bufkill'
-Plug 'ashisha/image.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tomlion/vim-solidity'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'jreybert/vimagit'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 " Plug 'mfussenegger/nvim-dap'
 call plug#end()
 
@@ -62,40 +64,8 @@ call plug#end()
 " colorscheme onehalfdark
 colorscheme gruvbox
 
-" open netrw
-let g:NetrwIsOpen=0
-function! ToggleNetrw()
-    if g:NetrwIsOpen
-        let i = bufnr("$")
-        while (i >= 1)
-            if (getbufvar(i, "&filetype") == "netrw")
-                silent exe "bwipeout " . i
-            endif
-            let i-=1
-        endwhile
-        let g:NetrwIsOpen=0
-    else
-        let g:NetrwIsOpen=1
-        silent Explore
-    endif
-endfunction
-
-" Add your own mapping. For example:
-noremap <silent> <c-t> :call ToggleNetrw()<CR>
-nnoremap <C-i> :LspStop<CR>
-nnoremap <C-o> :LspStart<CR>
-
-" RainbowParen config
-let g:rbpt_colorpairs = [
-      \ ['201', '#FF00FF'],
-      \ ['yellow', 'yellow'],
-      \ ['cyan', 'cyan'],
-      \ ['red', 'firebrick1'],
-      \ ]
-
+" netrw tree liststyle
 let g:netrw_liststyle = 3
-" let g:netrw_banner = 0
-
 
 " binding scrollwheel
 :map <ScrollWheelUp> <C-Y>
@@ -132,8 +102,9 @@ let g:codestats_api_key = $CODESTATS_TOKEN
 " Optional: configure vim-airline to display status
 let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+" Files opened on the top
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 
 " setup rust_analyzer LSP (IDE features)
@@ -146,36 +117,35 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
+" Custom remappings
 nnoremap <C-j> :noh<CR>
-nnoremap <C-PageUp> :bn<CR>
-nnoremap <C-PageDown> :bp<CR>
-nnoremap <C-n> :bp<CR>
-nnoremap <C-m> :bn<CR>
-nnoremap <C-c> :BD<CR>
+" nnoremap <C-h> :bp<CR>
+" nnoremap <C-l> :bn<CR>
+nnoremap <C-c> :bd<CR>
+" behave vim
+nnoremap Y y$
+" keeping it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+" Undo breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+"Moving Text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+nnoremap <leader>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+" Netrw
+nnoremap <leader>e :Ex<CR>
+nnoremap <leader>r :Rex<CR>
 
 :verbose imap <tab>
 
-" better .js syntax highlighting
-augroup filetype javascript syntax=javascript
-
-" nnoremap <C-t> :NERDTreeToggle<CR>
-" Start NERDTree when Vim is started without file arguments.
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-
-" Start NERDTree and put the cursor back in the other window.
-" autocmd VimEnter * NERDTree | wincmd p
-
-" Start NERDTree and leave the cursor in it.
-" autocmd VimEnter * NERDTree
-
-" Start NERDTree. If a file is specified, move the cursor to its window.
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-
-" Exit Vim if NERDTree is the only window left.
-" autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-" \ quit | endif
 
 " copy to clipboard on all operations not only * +
 " set clipboard+=unnamedplus
@@ -193,14 +163,13 @@ let g:clipboard = {
 \}
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+" xmap ga <Plug>(EasyAlign)
 
 " whitespace
 " autocmd FileType markdown,sql,c,cpp,python,ruby,javascript,html,java,coffee,less,scss,css,clojure,yaml,make autocmd BufWritePre <buffer> :exe '%s/\s\+$//e'
 
 " Clojure
 let g:sexp_enable_insert_mode_mappings = 1
-
 let g:clojure_fuzzy_indent_patterns = ['^doto', '^with', '^def', '^let', 'go-loop', 'match', '^context', '^GET', '^PUT', '^POST', '^PATCH', '^DELETE', '^ANY', 'this-as', '^are', '^dofor']
 let g:clojure_align_multiline_strings = 1
 let g:clojure_maxlines = 100
@@ -224,110 +193,132 @@ augroup ARKNIUM
 augroup END
 
 lua <<EOF
-  lspconfig = require "lspconfig"
-  lspconfig.gopls.setup {
-    cmd = {"gopls", "serve"},
-    settings = {
-      gopls = {
-        analyses = {
-          unusedparams = true,
-        },
-        staticcheck = true,
-      },
-    },
-  }
-
-  lspconfig.eslint.setup{
-    cmd = { "vscode-eslint-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
-    on_new_config = function(config, new_root_dir)
-          -- The "workspaceFolder" is a VSCode concept. It limits how far the
-          -- server will traverse the file system when locating the ESLint config
-          -- file (e.g., .eslintrc).
-          config.settings.workspaceFolder = {
-            uri = new_root_dir,
-            name = vim.fn.fnamemodify(new_root_dir, ':t'),
-          }
-        end,
-    settings = {
-      codeAction = {
-        disableRuleComment = {
-          enable = true,
-          location = "separateLine"
-        },
-        showDocumentation = {
-          enable = true
-        }
-      },
-      codeActionOnSave = {
-        enable = false,
-        mode = "all"
-      },
-      format = true,
-      nodePath = "",
-      onIgnoredFiles = "off",
-      packageManager = "npm",
-      quiet = false,
-      rulesCustomizations = {},
-      run = "onType",
-      useESLintClass = false,
-      validate = "on",
-      workingDirectory = {
-        mode = "location"
-      }
-    }
-  }
-
+  -- lspconfig = require "lspconfig"
+  -- lspconfig.eslint.setup{
+  --   cmd = { "vscode-eslint-language-server", "--stdio" },
+  --   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
+  --   on_new_config = function(config, new_root_dir)
+  --         -- The "workspaceFolder" is a VSCode concept. It limits how far the
+  --         -- server will traverse the file system when locating the ESLint config
+  --         -- file (e.g., .eslintrc).
+  --         config.settings.workspaceFolder = {
+  --           uri = new_root_dir,
+  --           name = vim.fn.fnamemodify(new_root_dir, ':t'),
+  --         }
+  --       end,
+  --   settings = {
+  --     codeAction = {
+  --       disableRuleComment = {
+  --         enable = true,
+  --         location = "separateLine"
+  --       },
+  --       showDocumentation = {
+  --         enable = true
+  --       }
+  --     },
+  --     codeActionOnSave = {
+  --       enable = false,
+  --       mode = "all"
+  --     },
+  --     format = true,
+  --     nodePath = "",
+  --     onIgnoredFiles = "off",
+  --     packageManager = "npm",
+  --     quiet = false,
+  --     rulesCustomizations = {},
+  --     run = "onType",
+  --     useESLintClass = false,
+  --     validate = "on",
+  --     workingDirectory = {
+  --       mode = "location"
+  --     }
+  --   }
+  -- }
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+-- local opts = { noremap=true, silent=true }
+-- vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
+-- local on_attach = function(client, bufnr)
+--   -- Enable completion triggered by <c-x><c-o>
+--   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+--
+--   -- Mappings.
+--   -- See `:help vim.lsp.*` for documentation on any of the below functions
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+--   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+-- end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end
+-- local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+-- for _, lsp in pairs(servers) do
+--   require('lspconfig')[lsp].setup {
+--     on_attach = on_attach,
+--     flags = {
+--       -- This will be the default in neovim 0.7+
+--       debounce_text_changes = 150,
+--     }
+--   }
+-- end
 EOF
 
-" Launch gopls when Go files are in use
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+
 let g:LanguageClient_serverCommands = {
-       \ 'go': ['gopls']
+       \ 'go': ['gopls'],
+       \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+       \ 'javascript': ['vscode-eslint-language-server', '--stdio'],
+       \ 'python': ['/usr/local/bin/pyls'],
+       \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
        \ }
+
+let g:LanguageClient_useVirtualText = 'CodeLens'
 
 " Run gofmt on save
 autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+
+" note that if you are using Plug mapping you should not use `noremap` mappings.
+nmap <F5> <Plug>(lcn-menu)
+" Or map each action separately
+nmap <leader>k <Plug>(lcn-hover)
+nmap <leader>n <Plug>(lcn-diagnostics-next)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> gD <Plug>(lcn-references)
+nmap <silent> gI <Plug>(lcn-implementation)
+nmap <silent> gT <Plug>(lcn-type-definition)
+nmap <silent> gS <Plug>(lcn-symbols)
+nmap <silent> <F2> <Plug>(lcn-rename)
+
+" better .js syntax highlighting
+augroup filetype javascript syntax=javascript
+
+" Harpoon
+lua <<EOF
+require("harpoon").setup()
+EOF
+
+nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>
+nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>
+
+nnoremap <silent><C-h> :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <silent><C-n> :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>
+
