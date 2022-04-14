@@ -61,8 +61,9 @@ call plug#end()
 " colorscheme happy_hacking
 " colorscheme OceanicNext
 " colorscheme sonokai
+colorscheme solarized8_high
 " colorscheme onehalfdark
-colorscheme gruvbox
+" colorscheme gruvbox
 
 " netrw tree liststyle
 let g:netrw_liststyle = 3
