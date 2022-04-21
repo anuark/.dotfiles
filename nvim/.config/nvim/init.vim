@@ -38,6 +38,7 @@ call plug#begin()
 Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
 Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'lambdalisue/battery.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
@@ -69,10 +70,10 @@ colorscheme solarized8_high
 let g:netrw_liststyle = 3
 
 " binding scrollwheel
-:map <ScrollWheelUp> <C-Y>
-:map <S-ScrollWheelUp> <C-U>
-:map <ScrollWheelDown> <C-E>
-:map <S-ScrollWheelDown> <C-D>
+" :map <ScrollWheelUp> <C-Y>
+" :map <S-ScrollWheelUp> <C-U>
+" :map <ScrollWheelDown> <C-E>
+" :map <S-ScrollWheelDown> <C-D>
 
 set mouse=a
 if has("mouse_sgr")
@@ -107,6 +108,12 @@ let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
+
+" battery.vim
+" set statusline=...%{battery#component()}...
+" set tabline=...%{battery#component()}...
+" let g:battery#update_tabline = 1    " For tabline.
+" let g:battery#update_statusline = 1 " For statusline.
 
 " setup rust_analyzer LSP (IDE features)
 " lua require'nvim_lsp'.rust_analyzer.setup{}
