@@ -256,7 +256,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -267,8 +267,9 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gH', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -280,12 +281,13 @@ end
 -- map buffer local keybindings when the language server attaches
 local servers = {
     'pyright',
-    -- 'gopls',
+    'gopls',
     'tsserver',
     'vimls',
     'eslint',
     'cssls',
     'jsonls',
+    'intelephense',
     'rust_analyzer' }
   for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup {
@@ -294,26 +296,34 @@ local servers = {
         -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
         composites = false,
+      },
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true,
+            composites = false,
+          },
+          staticcheck = true,
+        }
       }
   }
 end
 
-util = require "lspconfig/util"
-
-require('lspconfig')['gopls'].setup {
-  cmd = {"gopls", "serve"},
-  filetypes = {"go", "gomod"},
-  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-        composites = false,
-      },
-      staticcheck = true,
-    },
-  },
-}
+-- util = require "lspconfig/util"
+-- require('lspconfig')['gopls'].setup {
+--   cmd = {"gopls", "serve"},
+--   filetypes = {"go", "gomod"},
+--   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+--   settings = {
+--     gopls = {
+--       analyses = {
+--         unusedparams = true,
+--         composites = false,
+--       },
+--       staticcheck = true,
+--     },
+--   },
+-- }
 EOF
 
 " set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
