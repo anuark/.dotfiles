@@ -66,8 +66,16 @@ colorscheme solarized8_high
 " colorscheme onehalfdark
 " colorscheme gruvbox
 
-" netrw tree liststyle
+" netrw
 let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 0
+let g:netrw_altv = 1
+let g:netrw_winsize = 20
+" augroup ProjectDrawer
+"     autocmd!
+"     autocmd VimEnter * :Vexplore
+" augroup END
 
 " binding scrollwheel
 " :map <ScrollWheelUp> <C-Y>
@@ -200,6 +208,8 @@ augroup ARKNIUM
     autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 augroup END
 
+autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+
 lua <<EOF
   lspconfig = require "lspconfig"
   lspconfig.eslint.setup{
@@ -256,7 +266,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
