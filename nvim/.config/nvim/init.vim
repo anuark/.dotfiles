@@ -61,8 +61,8 @@ call plug#end()
 " colorscheme space-vim-dark
 " colorscheme happy_hacking
 " colorscheme OceanicNext
-" colorscheme sonokai
-colorscheme solarized8_high
+colorscheme sonokai
+" colorscheme solarized8_high
 " colorscheme onehalfdark
 " colorscheme gruvbox
 
@@ -211,51 +211,8 @@ augroup END
 autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
 
 lua <<EOF
-  lspconfig = require "lspconfig"
-  lspconfig.eslint.setup{
-    cmd = { "vscode-eslint-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
-    on_new_config = function(config, new_root_dir)
-          -- The "workspaceFolder" is a VSCode concept. It limits how far the
-          -- server will traverse the file system when locating the ESLint config
-          -- file (e.g., .eslintrc).
-          config.settings.workspaceFolder = {
-            uri = new_root_dir,
-            name = vim.fn.fnamemodify(new_root_dir, ':t'),
-          }
-        end,
-    settings = {
-      codeAction = {
-        disableRuleComment = {
-          enable = true,
-          location = "separateLine"
-        },
-        showDocumentation = {
-          enable = true
-        }
-      },
-      codeActionOnSave = {
-        enable = false,
-        mode = "all"
-      },
-      format = true,
-      nodePath = "",
-      onIgnoredFiles = "off",
-      packageManager = "npm",
-      quiet = false,
-      rulesCustomizations = {},
-      run = "onType",
-      useESLintClass = false,
-      validate = "on",
-      workingDirectory = {
-        mode = "location"
-      }
-    }
-  }
-
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
