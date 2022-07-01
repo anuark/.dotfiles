@@ -75,6 +75,7 @@ let g:netrw_browse_split = 0
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
 let g:netrw_localrmdir='rm -rf'
+let g:netrw_localcopycmd='cp -f'
 
 set mouse=a
 if has("mouse_sgr")
@@ -146,6 +147,8 @@ nnoremap <leader>j :m .+1<CR>==
 " Netrw
 nnoremap <leader>e :Ex<CR>
 nnoremap <leader>r :Rex<CR>
+
+noremap x "_x
 
 :verbose imap <tab>
 
