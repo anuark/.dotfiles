@@ -33,6 +33,11 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
+
+local coq = require "coq"
+-- lsp.<server>.setup(coq.lsp_ensure_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 local servers = {
     'pyright',
     'gopls',
@@ -60,9 +65,13 @@ for _, lsp in pairs(servers) do
                 },
                 staticcheck = true,
             }
-        }
+        },
+        capabilities = capabilities
     }
+    require('lspconfig')[lsp].setup(coq.lsp_ensure_capabilities())
 end
+
+
 
 -- util = require "lspconfig/util"
 -- require('lspconfig')['gopls'].setup {
@@ -81,6 +90,8 @@ end
 -- }
 
 require 'nvim-treesitter.configs'.setup {
+    sync_install = false,
+
     highlight = {
         enable = true,
     },
@@ -103,3 +114,5 @@ require("todo-comments").setup {
         exclude = {}, -- list of file types to exclude highlighting
     },
 }
+
+vim.cmd([[COQnow]])

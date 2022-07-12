@@ -35,9 +35,18 @@ set nowritebackup
 set cmdheight=2
 
 call plug#begin()
-Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
+"Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'hrsh7th/cmp-buffer'
+"Plug 'hrsh7th/cmp-path'
+"Plug 'hrsh7th/cmp-cmdline'
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'L3MON4D3/LuaSnip'
+"Plug 'saadparwaiz1/cmp_luasnip'
+"
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
@@ -55,6 +64,11 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'sainnhe/everforest'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'onsails/lspkind-nvim'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+" Plug 'sbdchd/neoformat'
 call plug#end()
 
 " colorscheme space-vim-dark
@@ -69,13 +83,11 @@ call plug#end()
 colorscheme PaperColor
 
 " netrw
-let g:netrw_liststyle = 1
-let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_banner = 1
 let g:netrw_browse_split = 0
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
-let g:netrw_localrmdir='rm -rf'
-let g:netrw_localcopycmd='cp -f'
 
 set mouse=a
 if has("mouse_sgr")
@@ -113,6 +125,9 @@ let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 
+" setup rust_analyzer LSP (IDE features)
+" lua require'nvim_lsp'.rust_analyzer.setup{}
+
 " Telescope
 " Using Lua functions
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -123,6 +138,11 @@ nnoremap <leader>fn <cmd>TodoTelescope<cr>
 
 " Custom remappings
 nnoremap <C-j> :noh<CR>
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+nnoremap x "_x
+vnoremap p "_dP
+
 " nnoremap <C-h> :bp<CR>
 " nnoremap <C-l> :bn<CR>
 nnoremap <C-c> :bd<CR>
@@ -147,8 +167,6 @@ nnoremap <leader>j :m .+1<CR>==
 " Netrw
 nnoremap <leader>e :Ex<CR>
 nnoremap <leader>r :Rex<CR>
-
-noremap x "_x
 
 :verbose imap <tab>
 
@@ -201,4 +219,6 @@ nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap <silent><C-n> :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>
 
+
 lua require('main')
+
