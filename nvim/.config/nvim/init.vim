@@ -50,7 +50,10 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
@@ -68,6 +71,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+Plug 'nvim-lua/lsp_extensions.nvim'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -83,11 +87,13 @@ call plug#end()
 colorscheme PaperColor
 
 " netrw
-let g:netrw_liststyle = 3
+let g:netrw_liststyle = 0
 let g:netrw_banner = 1
 let g:netrw_browse_split = 0
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
+" let g:netrw_keepdir = 0
+" let g:netrw_localcopycmd = "cp -f"
 
 set mouse=a
 if has("mouse_sgr")
@@ -125,19 +131,16 @@ let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 
-" setup rust_analyzer LSP (IDE features)
-" lua require'nvim_lsp'.rust_analyzer.setup{}
-
 " Telescope
 " Using Lua functions
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fd <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>fn <cmd>TodoTelescope<cr>
 
 " Custom remappings
-nnoremap <C-j> :noh<CR>
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 nnoremap x "_x
@@ -165,8 +168,11 @@ inoremap <C-k> <esc>:m .-2<CR>==
 nnoremap <leader>k :m .-2<CR>==
 nnoremap <leader>j :m .+1<CR>==
 " Netrw
-nnoremap <leader>e :Ex<CR>
-nnoremap <leader>r :Rex<CR>
+" nnoremap <leader>e :Ex<CR>
+" nnoremap <leader>r :Rex<CR>
+" LSP
+nnoremap <leader>o :LspRestart<CR>
+nnoremap <Leader>T :lua require'lsp_extensions'.inlay_hints()<cr>
 
 :verbose imap <tab>
 
@@ -192,15 +198,15 @@ let g:clojure_align_multiline_strings = 1
 let g:clojure_maxlines = 100
 let g:clj_refactor_prefix_rewriting=0
 
-function! Expand(exp) abort
-    let l:result = expand(a:exp)
-    return l:result ==# '' ? '' : "file://" . l:result
-endfunction
+" function! Expand(exp) abort
+"     let l:result = expand(a:exp)
+"     return l:result ==# '' ? '' : "file://" . l:result
+" endfunction
 
-highlight Normal guibg=#101010 guifg=white
-highlight CursorColumn guibg=#202020
-highlight Keyword guifg=#FFAB52
-highlight CursorLine guibg=#202020
+" highlight Normal guibg=#101010 guifg=white
+" highlight CursorColumn guibg=#202020
+" highlight Keyword guifg=#FFAB52
+" highlight CursorLine guibg=#202020
 
 augroup ARKNIUM
     autocmd!
@@ -209,7 +215,14 @@ augroup ARKNIUM
     autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 augroup END
 
+augroup custom_fugitive
+    autocmd!
+    autocmd VimEnter,BufNewFile,BufReadPost * if !empty(maparg('null', 'n')) | unmap <buffer> null| endif
+augroup END
+
 autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+" autocmd VimEnter <buffer> unmap null
+" autocmd VimEnter echo 'hola'
 
 nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>
 nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
@@ -219,6 +232,23 @@ nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap <silent><C-n> :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>
 
+" Coq config
+let g:coq_settings = {
+  \ "auto_start": 'shut-up',
+  \ "keymap.recommended": v:false,
+  \ "keymap.manual_complete": "<c-space>",
+  \ "keymap.jump_to_mark": "",
+  \ "keymap.pre_select": v:true
+\ }
 
-lua require('main')
+" Keybindings
+ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
+ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
+ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+
+" noremap n :echo 'pressed n'<CR>
+
+:lua require('main')
 
