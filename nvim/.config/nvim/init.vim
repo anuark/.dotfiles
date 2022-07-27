@@ -32,21 +32,15 @@ set nu
 set rnu
 set nobackup
 set nowritebackup
+set backupcopy=yes
 set cmdheight=2
 
 call plug#begin()
-" Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
-"Plug 'hrsh7th/cmp-nvim-lsp'
-"Plug 'hrsh7th/cmp-buffer'
-"Plug 'hrsh7th/cmp-path'
-"Plug 'hrsh7th/cmp-cmdline'
-"Plug 'hrsh7th/nvim-cmp'
-"Plug 'L3MON4D3/LuaSnip'
-"Plug 'saadparwaiz1/cmp_luasnip'
-"
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
@@ -71,7 +65,6 @@ Plug 'onsails/lspkind-nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-Plug 'nvim-lua/lsp_extensions.nvim'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -121,10 +114,13 @@ else
   set signcolumn=yes
 endif
 
+let g:airline_theme='atomic'
+
 let g:codestats_api_key = $CODESTATS_TOKEN
 
 " Optional: configure vim-airline to display status
-let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
+" let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
+
 
 " Files opened on the top
 " let g:airline#extensions#tabline#enabled = 1
@@ -149,6 +145,7 @@ vnoremap p "_dP
 " nnoremap <C-h> :bp<CR>
 " nnoremap <C-l> :bn<CR>
 nnoremap <C-c> :bd<CR>
+nnoremap <C-S-c> :bd!<CR>
 " behave vim
 nnoremap Y y$
 " keeping it centered
