@@ -65,6 +65,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+Plug 'tpope/vim-fugitive'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
