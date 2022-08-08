@@ -66,6 +66,7 @@ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 Plug 'tpope/vim-fugitive'
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -127,6 +128,9 @@ let g:codestats_api_key = $CODESTATS_TOKEN
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#vimagit#enabled = 1
+
 
 " Telescope
 " Using Lua functions
@@ -137,6 +141,15 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fd <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>fn <cmd>TodoTelescope<cr>
 
+" Git push origin <branch>
+nnoremap <leader>P :call PushToCurrentBranch()<CR>
+function! PushToCurrentBranch()
+    exe ":Gwrite"
+    let branch = fugitive#statusline()
+    let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
+    exe ":Git push origin" . branch
+endfunction
+
 " Custom remappings
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
@@ -145,8 +158,8 @@ vnoremap p "_dP
 
 " nnoremap <C-h> :bp<CR>
 " nnoremap <C-l> :bn<CR>
-nnoremap <C-c> :bd<CR>
 nnoremap <C-S-c> :bd!<CR>
+nnoremap <C-c> :bd<CR>
 " behave vim
 nnoremap Y y$
 " keeping it centered
@@ -161,8 +174,8 @@ inoremap ? ?<c-g>u
 "Moving Text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-inoremap <C-j> <esc>:m .+1<CR>==
-inoremap <C-k> <esc>:m .-2<CR>==
+" inoremap <C-j> <esc>:m .+1<CR>==
+" inoremap <C-k> <esc>:m .-2<CR>==
 nnoremap <leader>k :m .-2<CR>==
 nnoremap <leader>j :m .+1<CR>==
 " Netrw
