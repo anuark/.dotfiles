@@ -174,17 +174,23 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
 
-require('toggleterm').setup{
+require('toggleterm').setup {
     size = 20,
     open_mapping = [[<c-\>]],
-    direction = 'float'
+    direction = 'float',
+    winbar = {
+        enabled = false,
+        name_formatter = function(term) --  term: Terminal
+            return term.name
+        end
+    },
 }
 
-local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true })
 
 function _lazygit_toggle()
-  lazygit:toggle()
+    lazygit:toggle()
 end
 
-vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })

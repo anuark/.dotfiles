@@ -55,7 +55,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tomlion/vim-solidity'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'jreybert/vimagit'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
@@ -129,7 +128,6 @@ let g:codestats_api_key = $CODESTATS_TOKEN
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#vimagit#enabled = 1
 
 
 " Telescope
@@ -140,15 +138,6 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fd <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>fn <cmd>TodoTelescope<cr>
-
-" Git push origin <branch>
-nnoremap <leader>P :call PushToCurrentBranch()<CR>
-function! PushToCurrentBranch()
-    exe ":Gwrite"
-    let branch = fugitive#statusline()
-    let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
-    exe ":Git push origin" . branch
-endfunction
 
 " Custom remappings
 nnoremap <leader>d "_d
@@ -182,8 +171,7 @@ nnoremap <leader>j :m .+1<CR>==
 " nnoremap <leader>e :Ex<CR>
 " nnoremap <leader>r :Rex<CR>
 " LSP
-nnoremap <leader>o :LspRestart<CR>
-nnoremap <Leader>T :lua require'lsp_extensions'.inlay_hints()<cr>
+nnoremap <leader>r :LspRestart<CR>
 
 :verbose imap <tab>
 
