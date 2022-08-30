@@ -66,6 +66,8 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 Plug 'tpope/vim-fugitive'
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+Plug 'Everblush/everblush.nvim', { 'as': 'everblush' }
+Plug 'f-person/git-blame.nvim'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -77,15 +79,16 @@ call plug#end()
 " colorscheme onehalfdark
 " colorscheme gruvbox
 " colorscheme spacecamp
-" colorscheme everforest
-colorscheme PaperColor
+" colorscheme PaperColor
+colorscheme everforest
+" colorscheme everblush
 
 " netrw
-let g:netrw_liststyle = 0
-let g:netrw_banner = 1
-let g:netrw_browse_split = 0
-let g:netrw_altv = 1
-let g:netrw_winsize = 20
+" let g:netrw_liststyle = 0
+" let g:netrw_banner = 1
+" let g:netrw_browse_split = 0
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 20
 " let g:netrw_keepdir = 0
 " let g:netrw_localcopycmd = "cp -f"
 
@@ -128,6 +131,8 @@ let g:codestats_api_key = $CODESTATS_TOKEN
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
+
+let g:gitblame_enabled = 0
 
 
 " Telescope
@@ -237,7 +242,8 @@ let g:coq_settings = {
   \ "keymap.recommended": v:false,
   \ "keymap.manual_complete": "<c-space>",
   \ "keymap.jump_to_mark": "",
-  \ "keymap.pre_select": v:true
+  \ "keymap.pre_select": v:true,
+  \ "keymap.repeat": ","
 \ }
 
 " Keybindings

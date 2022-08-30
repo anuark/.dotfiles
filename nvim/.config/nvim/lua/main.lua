@@ -89,7 +89,8 @@ local servers = {
     'jsonls',
     'sumneko_lua',
     'intelephense',
-    'rust_analyzer'
+    'rust_analyzer',
+    'solc'
 }
 for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup(lspSetup)
@@ -124,7 +125,7 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 
-require("todo-comments").setup {
+require('todo-comments').setup {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
@@ -139,9 +140,17 @@ require("todo-comments").setup {
     },
 }
 
--- You dont need to set any of these options. These are the default ones. Only
--- the loading is important
 require('telescope').setup {
+    defaults = {
+      layout_strategy = 'flex',
+      layout_config = {
+            height = 0.90,
+            width = 0.90,
+            horizontal = {
+                preview_width = 80
+            }
+        },
+    },
     pickers = {
         find_files = {
             -- theme = "dropdown",
@@ -169,7 +178,7 @@ require('telescope').setup {
                 },
             },
         },
-    }
+    },
 }
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
@@ -189,8 +198,8 @@ require('toggleterm').setup {
 local Terminal = require('toggleterm.terminal').Terminal
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true })
 
-function _lazygit_toggle()
+function Lazygit_toggle()
     lazygit:toggle()
 end
 
-vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { noremap = true, silent = true })
