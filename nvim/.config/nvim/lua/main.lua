@@ -90,7 +90,8 @@ local servers = {
     'sumneko_lua',
     'intelephense',
     'rust_analyzer',
-    'solc'
+    'solc',
+    'tailwindcss'
 }
 for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup(lspSetup)
@@ -123,6 +124,46 @@ require 'nvim-treesitter.configs'.setup {
     indent = {
         enable = true,
     },
+}
+
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+        -- For all filetypes
+        -- Note that setting an entry here replaces all other patterns for this entry.
+        -- By setting the 'default' entry below, you can control which nodes you want to
+        -- appear in the context window.
+        default = {
+            'class',
+            'function',
+            'method',
+            -- 'for', -- These won't appear in the context
+            -- 'while',
+            -- 'if',
+            -- 'switch',
+            -- 'case',
+        },
+        -- Example for a specific filetype.
+        -- If a pattern is missing, *open a PR* so everyone can benefit.
+        --   rust = {
+        --       'impl_item',
+        --   },
+    },
+    exact_patterns = {
+        -- Example for a specific filetype with Lua patterns
+        -- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+        -- exactly match "impl_item" only)
+        -- rust = true,
+    },
+
+    -- [!] The options below are exposed but shouldn't require your attention,
+    --     you can safely ignore them.
+
+    zindex = 20, -- The Z-index of the context window
+    mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+    separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
 
 require('todo-comments').setup {
@@ -182,24 +223,69 @@ require('telescope').setup {
 }
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
+require("telescope").load_extension('emoji')
 
 require('toggleterm').setup {
     size = 20,
     open_mapping = [[<c-\>]],
-    direction = 'float',
+    direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float',
     winbar = {
         enabled = false,
         name_formatter = function(term) --  term: Terminal
             return term.name
         end
     },
+    persist_mode = true,
+    float_opts = {
+      -- The border key is *almost* the same as 'nvim_open_win'
+      -- see :h nvim_open_win for details on borders however
+      -- the 'curved' border is a custom border type
+      -- not natively supported but implemented in this plugin.
+      border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+      -- like `size`, width and height can be a number or function which is passed the current terminal
+      -- winblend = 3,
+    },
 }
 
+function _G.set_terminal_keymaps ()
+  for from,to in pairs {
+    ["`"] = [[<C-\><C-n>]],
+    ["<C-w>"] = [[<C-\><C-o><C-w>]],
+  } do
+    vim.api.nvim_buf_set_keymap(0, "t", from, to, {
+      noremap = true,
+      silent = true
+    })
+  end
+end
+vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
+
 local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true })
+local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
 
 function Lazygit_toggle()
     lazygit:toggle()
 end
 
 vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { noremap = true, silent = true })
+
+-- vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"})
+-- vim.api.nvim_set_hl(0, "NormalFloat", {bg="#3B4252"})
+-- vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#3B4252"})
+-- vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#3B4252"})
+
+require("transparent").setup({
+  enable = true, -- boolean: enable transparent
+  extra_groups = { -- table/string: additional groups that should be cleared
+    -- In particular, when you set it to 'all', that means all available groups
+
+    -- example of akinsho/nvim-bufferline.lua
+    "BufferLineTabClose",
+    "BufferlineBufferSelected",
+    "BufferLineFill",
+    "BufferLineBackground",
+    "BufferLineSeparator",
+    "BufferLineIndicatorSelected",
+  },
+  exclude = {}, -- table: groups you don't want to clear
+})

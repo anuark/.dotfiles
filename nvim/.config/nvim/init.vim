@@ -56,6 +56,7 @@ Plug 'tomlion/vim-solidity'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'sainnhe/everforest'
@@ -68,6 +69,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 Plug 'Everblush/everblush.nvim', { 'as': 'everblush' }
 Plug 'f-person/git-blame.nvim'
+Plug 'xiyaowong/telescope-emoji.nvim'
+Plug 'xiyaowong/nvim-transparent'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -80,8 +83,10 @@ call plug#end()
 " colorscheme gruvbox
 " colorscheme spacecamp
 " colorscheme PaperColor
-colorscheme everforest
-" colorscheme everblush
+" colorscheme everforest
+colorscheme everblush
+
+set termguicolors
 
 " netrw
 " let g:netrw_liststyle = 0
@@ -137,6 +142,7 @@ let g:gitblame_enabled = 0
 
 " Telescope
 " Using Lua functions
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
