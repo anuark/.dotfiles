@@ -42,7 +42,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     -- Diagnostics
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', ':Telescope diagnostics<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gH', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gH', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -126,7 +126,7 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 
-require'treesitter-context'.setup{
+require 'treesitter-context'.setup {
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
@@ -162,7 +162,7 @@ require'treesitter-context'.setup{
     --     you can safely ignore them.
 
     zindex = 20, -- The Z-index of the context window
-    mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+    mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
     separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
 
@@ -183,8 +183,8 @@ require('todo-comments').setup {
 
 require('telescope').setup {
     defaults = {
-      layout_strategy = 'flex',
-      layout_config = {
+        layout_strategy = 'flex',
+        layout_config = {
             height = 0.90,
             width = 0.90,
             horizontal = {
@@ -223,7 +223,7 @@ require('telescope').setup {
 }
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
-require("telescope").load_extension('emoji')
+require('telescope').load_extension('emoji')
 
 require('toggleterm').setup {
     size = 20,
@@ -237,27 +237,28 @@ require('toggleterm').setup {
     },
     persist_mode = true,
     float_opts = {
-      -- The border key is *almost* the same as 'nvim_open_win'
-      -- see :h nvim_open_win for details on borders however
-      -- the 'curved' border is a custom border type
-      -- not natively supported but implemented in this plugin.
-      border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
-      -- like `size`, width and height can be a number or function which is passed the current terminal
-      -- winblend = 3,
+        -- The border key is *almost* the same as 'nvim_open_win'
+        -- see :h nvim_open_win for details on borders however
+        -- the 'curved' border is a custom border type
+        -- not natively supported but implemented in this plugin.
+        border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+        -- like `size`, width and height can be a number or function which is passed the current terminal
+        -- winblend = 3,
     },
 }
 
-function _G.set_terminal_keymaps ()
-  for from,to in pairs {
-    ["`"] = [[<C-\><C-n>]],
-    ["<C-w>"] = [[<C-\><C-o><C-w>]],
-  } do
-    vim.api.nvim_buf_set_keymap(0, "t", from, to, {
-      noremap = true,
-      silent = true
-    })
-  end
+function _G.set_terminal_keymaps()
+    for from, to in pairs {
+        ["`"] = [[<C-\><C-n>]],
+        ["<C-w>"] = [[<C-\><C-o><C-w>]],
+    } do
+        vim.api.nvim_buf_set_keymap(0, "t", from, to, {
+            noremap = true,
+            silent = true
+        })
+    end
 end
+
 vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
 
 local Terminal = require('toggleterm.terminal').Terminal
@@ -269,23 +270,42 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { noremap = true, silent = true })
 
--- vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"})
--- vim.api.nvim_set_hl(0, "NormalFloat", {bg="#3B4252"})
--- vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#3B4252"})
--- vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#3B4252"})
-
 require("transparent").setup({
-  enable = true, -- boolean: enable transparent
-  extra_groups = { -- table/string: additional groups that should be cleared
-    -- In particular, when you set it to 'all', that means all available groups
-
-    -- example of akinsho/nvim-bufferline.lua
-    "BufferLineTabClose",
-    "BufferlineBufferSelected",
-    "BufferLineFill",
-    "BufferLineBackground",
-    "BufferLineSeparator",
-    "BufferLineIndicatorSelected",
-  },
-  exclude = {}, -- table: groups you don't want to clear
+    enable = false, -- boolean: enable transparent
+    extra_groups = { -- table/string: additional groups that should be cleared
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+    },
+    exclude = {}, -- table: groups you don't want to clear
 })
+
+require('jester').setup({
+    {
+        cmd = "jest -t '$result' -- $file", -- run command
+        identifiers = { "test", "it" }, -- used to identify tests
+        prepend = { "describe" }, -- prepend describe blocks
+        expressions = { "call_expression" }, -- tree-sitter object used to scan for tests/describe blocks
+        path_to_jest_run = 'jest', -- used to run tests
+        path_to_jest_debug = './node_modules/bin/jest', -- used for debugging
+        terminal_cmd = ":vsplit | terminal", -- used to spawn a terminal for running tests, for debugging refer to nvim-dap's config
+        dap = { -- debug adapter configuration
+            type = 'node2',
+            request = 'launch',
+            cwd = vim.fn.getcwd(),
+            runtimeArgs = { '--inspect-brk', '$path_to_jest', '--no-coverage', '-t', '$result', '--', '$file' },
+            args = { '--no-cache' },
+            sourceMaps = false,
+            protocol = 'inspector',
+            skipFiles = { '<node_internals>/**/*.js' },
+            console = 'integratedTerminal',
+            port = 9229,
+            disableOptimisticBPs = true
+        }
+    }
+})
+
+require('dap-go').setup()

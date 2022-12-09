@@ -46,7 +46,6 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -71,6 +70,13 @@ Plug 'Everblush/everblush.nvim', { 'as': 'everblush' }
 Plug 'f-person/git-blame.nvim'
 Plug 'xiyaowong/telescope-emoji.nvim'
 Plug 'xiyaowong/nvim-transparent'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'mfussenegger/nvim-dap'
+Plug 'Pocco81/dap-buddy.nvim'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'David-Kunz/jester'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'leoluz/nvim-dap-go'
 " Plug 'sbdchd/neoformat'
 call plug#end()
 
@@ -84,7 +90,8 @@ call plug#end()
 " colorscheme spacecamp
 " colorscheme PaperColor
 " colorscheme everforest
-colorscheme everblush
+" colorscheme everblush
+colorscheme catppuccin
 
 set termguicolors
 
@@ -139,6 +146,8 @@ let g:airline#extensions#branch#enabled = 1
 
 let g:gitblame_enabled = 0
 
+" Transparent background
+let g:transparent_enabled = v:false
 
 " Telescope
 " Using Lua functions
@@ -156,21 +165,23 @@ vnoremap <leader>d "_d
 nnoremap x "_x
 vnoremap p "_dP
 
-" nnoremap <C-h> :bp<CR>
-" nnoremap <C-l> :bn<CR>
 nnoremap <C-S-c> :bd!<CR>
 nnoremap <C-c> :bd<CR>
+
 " behave vim
 nnoremap Y y$
+
 " keeping it centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
+
 " Undo breakpoints
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
+
 "Moving Text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -178,11 +189,13 @@ vnoremap K :m '<-2<CR>gv=gv
 " inoremap <C-k> <esc>:m .-2<CR>==
 nnoremap <leader>k :m .-2<CR>==
 nnoremap <leader>j :m .+1<CR>==
-" Netrw
-" nnoremap <leader>e :Ex<CR>
-" nnoremap <leader>r :Rex<CR>
+
 " LSP
 nnoremap <leader>r :LspRestart<CR>
+
+" init.vim
+nnoremap <Leader>vs :source ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>ve :vsplit ~/.config/nvim/init.vim<CR>
 
 :verbose imap <tab>
 
@@ -247,7 +260,7 @@ let g:coq_settings = {
   \ "auto_start": 'shut-up',
   \ "keymap.recommended": v:false,
   \ "keymap.manual_complete": "<c-space>",
-  \ "keymap.jump_to_mark": "",
+  \ "keymap.jump_to_mark": "<c-m>",
   \ "keymap.pre_select": v:true,
   \ "keymap.repeat": ","
 \ }
@@ -260,6 +273,18 @@ ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C
 ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 
 " noremap n :echo 'pressed n'<CR>
+
+" nvim.dap
+nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+
 
 :lua require('main')
 
