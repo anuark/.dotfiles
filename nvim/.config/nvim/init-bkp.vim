@@ -1,3 +1,4 @@
+" cp -a ~/code/.dotfiles/nvim/.config/nvim ~/.config/
 " Ignore files
 set wildignore+=*.pyc
 set wildignore+=*_build/*
@@ -90,8 +91,8 @@ call plug#end()
 " colorscheme spacecamp
 " colorscheme PaperColor
 " colorscheme everforest
-" colorscheme everblush
-colorscheme catppuccin
+colorscheme everblush
+" colorscheme catppuccin
 
 set termguicolors
 
