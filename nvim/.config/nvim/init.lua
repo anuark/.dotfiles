@@ -11,9 +11,47 @@ end
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
+
+    -- color themes
+    -- use {
+    --     'catppuccin/nvim',
+    --     as = 'catppuccin',
+    --     config =  function()
+    --         vim.cmd('colorscheme catppuccin')
+    --     end
+    -- }
+    use({
+	  'rose-pine/neovim',
+	  as = 'rose-pine',
+	  config = function()
+		  vim.cmd('colorscheme rose-pine')
+	  end
+    })
+    -- use({
+	--   'Everblush/everblush.nvim',
+	--   as = 'rose-pine',
+	--   config = function()
+	-- 	  vim.cmd('colorscheme everblush')
+	--   end
+    -- })
+    -- use({
+	--   'NLKNguyen/papercolor-theme',
+	--   as = 'rose-pine',
+	--   config = function()
+	-- 	  vim.cmd('colorscheme PaperColor')
+	--   end
+    -- })
+    -- use({
+	--   'sainnhe/everforest',
+	--   as = 'rose-pine',
+	--   config = function()
+	-- 	  vim.cmd('colorscheme everforest')
+	--   end
+    -- })
+    -- use 'rafi/awesome-vim-colorschemes'
+
     use 'neovim/nvim-lsp'
     use 'neovim/nvim-lspconfig'
-    use 'rafi/awesome-vim-colorschemes'
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
     use 'ThePrimeagen/harpoon'
@@ -43,20 +81,16 @@ return require('packer').startup(function(use)
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-context'
     use 'folke/todo-comments.nvim'
-    use 'sainnhe/everforest'
-    use 'NLKNguyen/papercolor-theme'
     use 'onsails/lspkind-nvim'
     -- use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
     -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
     -- use { 'ms-jpq/coq.thirdparty', branch = '3p' }
     -- use 'tpope/vim-fugitive'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
-    use { 'Everblush/everblush.nvim', as = 'everblush' }
     use 'f-person/git-blame.nvim'
     use 'xiyaowong/telescope-emoji.nvim'
     -- use 'xiyaowong/nvim-transparent'
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
-    use { 'catppuccin/nvim', as = 'catppuccin' }
     -- use 'leoluz/nvim-dap-go'
     -- use 'mfussenegger/nvim-dap'
     -- use 'Pocco81/dap-buddy.nvim'
@@ -85,12 +119,10 @@ return require('packer').startup(function(use)
     }
 
     require('set')
-    -- require('coq')
     require('mapping')
     require('plugins')
     require('lsp')
-
-    vim.cmd('colorscheme catppuccin')
+    require('cmp')
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
