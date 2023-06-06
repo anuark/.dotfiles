@@ -13,8 +13,7 @@ vim.api.nvim_set_keymap("n", "<leader>gd", ":Telescope git_bcommits<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>",
-    { noremap = true, silent = true, hidden = true })
+vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", { noremap = true, silent = true })
 
 -- Custom remappings
 vim.cmd('nnoremap <leader>d "_d')

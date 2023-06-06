@@ -119,10 +119,9 @@ return require('packer').startup(function(use)
     }
 
     require('set')
-    require('mapping')
+    require('remap')
     require('plugins')
     require('lsp')
-    require('cmp')
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
