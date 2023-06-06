@@ -11,17 +11,16 @@ end
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    -- My plugins here
-    -- use 'foo1/bar1.nvim'
-    -- use 'foo2/bar2.nvim'
     use 'neovim/nvim-lsp'
     use 'neovim/nvim-lspconfig'
     use 'rafi/awesome-vim-colorschemes'
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
-    use 'nvim-lua/plenary.nvim'
     use 'ThePrimeagen/harpoon'
-    use 'nvim-telescope/telescope.nvim'
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
     use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-web-devicons'
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -32,9 +31,17 @@ return require('packer').startup(function(use)
     use 'tomlion/vim-solidity'
     use 'pangloss/vim-javascript'
     use 'maxmellon/vim-jsx-pretty'
+    use {
+     "folke/trouble.nvim",
+     dependencies = { "nvim-tree/nvim-web-devicons" },
+     opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+     },
+    }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-context'
-    use 'nvim-lua/plenary.nvim'
     use 'folke/todo-comments.nvim'
     use 'sainnhe/everforest'
     use 'NLKNguyen/papercolor-theme'
@@ -42,15 +49,13 @@ return require('packer').startup(function(use)
     -- use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
     -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
     -- use { 'ms-jpq/coq.thirdparty', branch = '3p' }
-    use 'tpope/vim-fugitive'
+    -- use 'tpope/vim-fugitive'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use { 'Everblush/everblush.nvim', as = 'everblush' }
     use 'f-person/git-blame.nvim'
     use 'xiyaowong/telescope-emoji.nvim'
     -- use 'xiyaowong/nvim-transparent'
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
-    use 'rcarriga/nvim-dap-ui'
-    use 'David-Kunz/jester'
     use { 'catppuccin/nvim', as = 'catppuccin' }
     -- use 'leoluz/nvim-dap-go'
     -- use 'mfussenegger/nvim-dap'
@@ -79,8 +84,7 @@ return require('packer').startup(function(use)
         }
     }
 
-
-    require('vim-settings')
+    require('set')
     -- require('coq')
     require('mapping')
     require('plugins')

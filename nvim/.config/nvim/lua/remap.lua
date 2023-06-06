@@ -1,7 +1,5 @@
--- Telescope
--- Using Lua functions
+
 vim.cmd('nnoremap <C-p> <cmd>lua require("telescope.builtin").find_files()<cr>')
-vim.cmd('nnoremap <leader>ff <cmd>lua require("telescope.builtin").find_files()<cr>')
 vim.cmd('nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep()<cr>')
 vim.cmd('nnoremap <leader>fb <cmd>lua require("telescope.builtin").buffers()<cr>')
 vim.cmd('nnoremap <leader>fh <cmd>lua require("telescope.builtin").help_tags()<cr>')
@@ -44,7 +42,7 @@ vim.cmd([[
 -- LSP
 vim.cmd('nnoremap <leader>r :LspRestart<CR>')
 
--- init.vim
+-- Edit Config
 vim.cmd('nnoremap <Leader>vs :source ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
 vim.cmd('nnoremap <Leader>ve :vsplit ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
 vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/.config/nvim ~/.config/<CR>')
@@ -58,16 +56,6 @@ vim.cmd('nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>')
 vim.cmd('nnoremap <silent><C-n> :lua require("harpoon.ui").nav_file(3)<CR>')
 vim.cmd('nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>')
 
--- Dap
--- vim.cmd('nnoremap <silent> <F5> <Cmd>lua require"dap'.continue()<CR>')
--- vim.cmd('nnoremap <silent> <F10> <Cmd>lua require"dap'.step_over()<CR>')
--- vim.cmd('nnoremap <silent> <F11> <Cmd>lua require"dap'.step_into()<CR>')
--- vim.cmd('nnoremap <silent> <F12> <Cmd>lua require"dap'.step_out()<CR>')
--- vim.cmd('nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>')
--- vim.cmd('nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>')
--- vim.cmd('nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>')
--- vim.cmd('nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>')
--- vim.cmd('nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>')
 
 -- Coq bindings
 vim.cmd('ino <silent><expr> <Esc>   pumvisible() ? "<C-e><Esc>" : "<Esc>"')

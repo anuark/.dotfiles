@@ -1,20 +1,5 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
--- vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
--- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
--- telescope git
-vim.api.nvim_set_keymap("n", "<leader>gc", ":Telescope git_commits<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gd", ":Telescope git_bcommits<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
-
--- telescope file browser
-vim.api.nvim_set_keymap("n", "<leader>e", ":Telescope file_browser<CR>", opts)
 
 
 -- util = require "lspconfig/util"
@@ -113,7 +98,9 @@ require('telescope').setup {
     pickers = {
         find_files = {
             -- theme = "dropdown",
-            prompt_prefix = "🔍 "
+            prompt_prefix = "🔍 ",
+            hidden = true,
+            file_ignore_patterns = {".git", "node_modules"}
         }
     },
     extensions = {
@@ -122,12 +109,13 @@ require('telescope').setup {
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+            hidden = true,
             -- the default case_mode is "smart_case"
         },
         file_browser = {
             -- theme = "ivy",
-            -- disables netrw and use telescope-file-browser in its place
             hijack_netrw = true,
+            hidden = true,
             -- mappings = {
             --     ["i"] = {
             --         -- your custom insert mode mappings
@@ -200,31 +188,6 @@ vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { no
 --     },
 --     exclude = {}, -- table: groups you don't want to clear
 -- })
-
-require('jester').setup({
-    {
-        cmd = "jest -t '$result' -- $file", -- run command
-        identifiers = { "test", "it" }, -- used to identify tests
-        prepend = { "describe" }, -- prepend describe blocks
-        expressions = { "call_expression" }, -- tree-sitter object used to scan for tests/describe blocks
-        path_to_jest_run = 'jest', -- used to run tests
-        path_to_jest_debug = './node_modules/bin/jest', -- used for debugging
-        terminal_cmd = ":vsplit | terminal", -- used to spawn a terminal for running tests, for debugging refer to nvim-dap's config
-        dap = { -- debug adapter configuration
-            type = 'node2',
-            request = 'launch',
-            cwd = vim.fn.getcwd(),
-            runtimeArgs = { '--inspect-brk', '$path_to_jest', '--no-coverage', '-t', '$result', '--', '$file' },
-            args = { '--no-cache' },
-            sourceMaps = false,
-            protocol = 'inspector',
-            skipFiles = { '<node_internals>/**/*.js' },
-            console = 'integratedTerminal',
-            port = 9229,
-            disableOptimisticBPs = true
-        }
-    }
-})
 
 -- windows to close with "q"
 vim.api.nvim_create_autocmd(
