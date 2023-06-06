@@ -21,32 +21,32 @@ return require('packer').startup(function(use)
     --     end
     -- }
     use({
-	  'rose-pine/neovim',
-	  as = 'rose-pine',
-	  config = function()
-		  vim.cmd('colorscheme rose-pine')
-	  end
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            vim.cmd('colorscheme rose-pine')
+        end
     })
     -- use({
-	--   'Everblush/everblush.nvim',
-	--   as = 'rose-pine',
-	--   config = function()
-	-- 	  vim.cmd('colorscheme everblush')
-	--   end
+    --   'Everblush/everblush.nvim',
+    --   as = 'rose-pine',
+    --   config = function()
+    -- 	  vim.cmd('colorscheme everblush')
+    --   end
     -- })
     -- use({
-	--   'NLKNguyen/papercolor-theme',
-	--   as = 'rose-pine',
-	--   config = function()
-	-- 	  vim.cmd('colorscheme PaperColor')
-	--   end
+    --   'NLKNguyen/papercolor-theme',
+    --   as = 'rose-pine',
+    --   config = function()
+    -- 	  vim.cmd('colorscheme PaperColor')
+    --   end
     -- })
     -- use({
-	--   'sainnhe/everforest',
-	--   as = 'rose-pine',
-	--   config = function()
-	-- 	  vim.cmd('colorscheme everforest')
-	--   end
+    --   'sainnhe/everforest',
+    --   as = 'rose-pine',
+    --   config = function()
+    -- 	  vim.cmd('colorscheme everforest')
+    --   end
     -- })
     -- use 'rafi/awesome-vim-colorschemes'
 
@@ -57,7 +57,7 @@ return require('packer').startup(function(use)
     use 'ThePrimeagen/harpoon'
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-web-devicons'
@@ -70,30 +70,21 @@ return require('packer').startup(function(use)
     use 'pangloss/vim-javascript'
     use 'maxmellon/vim-jsx-pretty'
     use {
-     "folke/trouble.nvim",
-     dependencies = { "nvim-tree/nvim-web-devicons" },
-     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-     },
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
     }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-context'
     use 'folke/todo-comments.nvim'
-    use 'onsails/lspkind-nvim'
-    -- use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
-    -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-    -- use { 'ms-jpq/coq.thirdparty', branch = '3p' }
-    -- use 'tpope/vim-fugitive'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'f-person/git-blame.nvim'
     use 'xiyaowong/telescope-emoji.nvim'
-    -- use 'xiyaowong/nvim-transparent'
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
-    -- use 'leoluz/nvim-dap-go'
-    -- use 'mfussenegger/nvim-dap'
-    -- use 'Pocco81/dap-buddy.nvim'
     use 'LuaLS/lua-language-server'
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -103,6 +94,7 @@ return require('packer').startup(function(use)
             { 'neovim/nvim-lspconfig' },
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
+            { 'onsails/lspkind-nvim' },
 
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
