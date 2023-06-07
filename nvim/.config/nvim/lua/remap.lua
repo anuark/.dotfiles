@@ -70,7 +70,15 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', op
 -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>gc", ":Telescope git_commits<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gd", ":Telescope git_bcommits<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", opts)
+
+-- gitblame
+vim.api.nvim_set_keymap("n", "<leader>gb", ":GitBlameToggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>goc", ":GitBlameOpenCommitURL<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gof", ":GitBlameOpenFileURL<CR>", opts)
+
+-- markdown preview
+vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreview<CR>', opts)

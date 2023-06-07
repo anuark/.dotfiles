@@ -52,7 +52,7 @@ return require('packer').startup(function(use)
 
     use 'neovim/nvim-lsp'
     use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/popup.nvim'
+    -- use 'nvim-lua/popup.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
     use 'ThePrimeagen/harpoon'
     use {
@@ -65,8 +65,7 @@ return require('packer').startup(function(use)
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
     use 'https://gitlab.com/code-stats/code-stats-vim.git'
-    use 'junegunn/vim-easy-align'
-    use 'tomlion/vim-solidity'
+    -- use 'tomlion/vim-solidity'
     use 'pangloss/vim-javascript'
     use 'maxmellon/vim-jsx-pretty'
     use {
@@ -84,7 +83,12 @@ return require('packer').startup(function(use)
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'f-person/git-blame.nvim'
     use 'xiyaowong/telescope-emoji.nvim'
-    use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
+    use({
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && npm install',
+        setup = function() vim.g.mkdp_filetypes = { 'markdown' } end,
+        ft = { 'markdown' },
+    })
     use 'LuaLS/lua-language-server'
     use {
         'VonHeikemen/lsp-zero.nvim',
