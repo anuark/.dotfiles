@@ -76,9 +76,9 @@ vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", opts)
 
 -- gitblame
-vim.api.nvim_set_keymap("n", "<leader>gb", ":GitBlameToggle<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>goc", ":GitBlameOpenCommitURL<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gof", ":GitBlameOpenFileURL<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gbb", ":GitBlameToggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gbc", ":GitBlameOpenCommitURL<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gbf", ":GitBlameOpenFileURL<CR>", opts)
 
 -- markdown preview
 vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreview<CR>', opts)

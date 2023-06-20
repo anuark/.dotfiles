@@ -135,6 +135,7 @@ require('toggleterm').setup {
     size = 20,
     open_mapping = [[<c-\>]],
     direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float',
+    auto_scroll = false,
     winbar = {
         enabled = false,
         name_formatter = function(term) --  term: Terminal
