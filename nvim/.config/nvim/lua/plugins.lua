@@ -42,8 +42,8 @@ require 'treesitter-context'.setup {
             'class',
             'function',
             'method',
-            -- 'for', -- These won't appear in the context
-            -- 'while',
+            'for', -- These won't appear in the context
+            'while',
             -- 'if',
             -- 'switch',
             -- 'case',
@@ -91,7 +91,10 @@ require('telescope').setup {
             height = 0.90,
             width = 0.90,
             horizontal = {
-                preview_width = 80
+                preview_width = 100
+            },
+            vertical = {
+                preview_width = 50
             }
         },
     },
