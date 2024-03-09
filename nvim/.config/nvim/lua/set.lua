@@ -78,7 +78,7 @@ vim.g.codestats_api_key = os.getenv("CODESTATS_TOKEN")
 -- let g:airline#extensions#tabline#formatter = 'unique_tail'
 vim.g.airline_powerline_fonts = 1
 vim.cmd('let g:airline#extensions#branch#enabled = 1')
-vim.g.gitblame_enabled = 0
+vim.g.gitblame_enabled = false
 
 -- Transparent background
 vim.g.transparent_enabled = false
