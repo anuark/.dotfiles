@@ -13,34 +13,34 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- color themes
-    use {
-        'catppuccin/nvim',
-        as = 'catppuccin',
-        config =  function()
-            vim.cmd('colorscheme catppuccin')
-        end
-    }
+    -- use {
+    --     'catppuccin/nvim',
+    --     as = 'catppuccin',
+    --     config =  function()
+    --         vim.cmd('colorscheme catppuccin')
+    --     end
+    -- }
     -- use({
     --     'rose-pine/neovim',
     --     as = 'rose-pine',
     --     config = function()
-    --         -- vim.cmd('colorscheme rose-pine')
+    --         vim.cmd('colorscheme rose-pine')
     --     end
     -- })
-    -- use({
-    --   'Everblush/everblush.nvim',
-    --   as = 'everblush',
-    --   config = function()
-    -- 	  vim.cmd('colorscheme everblush')
-    --   end
-    -- })
-    -- use({
-    --   'NLKNguyen/papercolor-theme',
-    --   as = 'PaperColor',
-    --   config = function()
-    -- 	  -- vim.cmd('colorscheme PaperColor')
-    --   end
-    -- })
+    use({
+      'Everblush/everblush.nvim',
+      as = 'everblush',
+      config = function()
+    	  vim.cmd('colorscheme everblush')
+      end
+    })
+    use({
+      'NLKNguyen/papercolor-theme',
+      as = 'PaperColor',
+      config = function()
+    	  -- vim.cmd('colorscheme PaperColor')
+      end
+    })
     -- use({
     --   'sainnhe/everforest',
     --   as = 'everforest',
@@ -81,13 +81,6 @@ return require('packer').startup(function(use)
     use 'folke/todo-comments.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'f-person/git-blame.nvim'
-    -- use 'xiyaowong/telescope-emoji.nvim'
-    -- use({
-    --     'iamcco/markdown-preview.nvim',
-    --     run = 'cd app && npm install',
-    --     setup = function() vim.g.mkdp_filetypes = { 'markdown' } end,
-    --     ft = { 'markdown' },
-    -- })
     use 'LuaLS/lua-language-server'
     use {
         'VonHeikemen/lsp-zero.nvim',
