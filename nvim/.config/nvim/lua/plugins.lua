@@ -88,10 +88,10 @@ require('telescope').setup {
     defaults = {
         layout_strategy = 'flex',
         layout_config = {
-            height = 0.90,
-            width = 0.90,
+            height = 0.80,
+            width = 0.80,
             horizontal = {
-                preview_width = 100
+                preview_width = 80
             },
             vertical = {
                 preview_width = 50
