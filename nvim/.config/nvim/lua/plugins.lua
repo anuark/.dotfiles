@@ -20,6 +20,8 @@
 
 require 'nvim-treesitter.configs'.setup {
     sync_install = false,
+    ensure_install = {"help", "go", "javascript", "typescript", "rust", "lua"},
+    auto_install = true,
 
     highlight = {
         enable = true,
@@ -87,16 +89,16 @@ require('todo-comments').setup {
 require('telescope').setup {
     defaults = {
         layout_strategy = 'flex',
-        layout_config = {
-            height = 0.80,
-            width = 0.80,
-            horizontal = {
-                preview_width = 80
-            },
-            vertical = {
-                preview_width = 50
-            }
-        },
+        -- layout_config = {
+        --     height = 0.80,
+        --     width = 0.80,
+        --     horizontal = {
+        --         preview_width = 80
+        --     },
+        --     vertical = {
+        --         preview_width = 50
+        --     }
+        -- },
     },
     pickers = {
         find_files = {
@@ -283,3 +285,18 @@ vim.keymap.set("n", "<leader>x", "<cmd>TroubleToggle<cr>",
 -- vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
 --   {silent = true, noremap = true}
 -- )
+
+require("zen-mode").setup {
+    window = {
+        width = 90,
+        options = {
+            number = true,
+            relativenumber = true,
+        }
+    },
+}
+
+vim.keymap.set("n", "<leader>zz", function()
+    require("zen-mode").toggle()
+    vim.wo.wrap = false
+end)

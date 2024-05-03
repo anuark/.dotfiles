@@ -1,5 +1,4 @@
-
--- Custom remappings
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.cmd('nnoremap <leader>d "_d')
 vim.cmd('vnoremap <leader>d "_d')
 vim.cmd('nnoremap x "_x')
@@ -58,11 +57,11 @@ vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap 
 
 -- telescope
 vim.cmd('nnoremap <C-p> <cmd>lua require("telescope.builtin").find_files()<cr>')
-vim.cmd('nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep()<cr>')
-vim.cmd('nnoremap <leader>fb <cmd>lua require("telescope.builtin").buffers()<cr>')
-vim.cmd('nnoremap <leader>fh <cmd>lua require("telescope.builtin").help_tags()<cr>')
+vim.cmd('nnoremap <leader>gg <cmd>lua require("telescope.builtin").live_grep()<cr>')
+vim.cmd('nnoremap <leader>b <cmd>lua require("telescope.builtin").buffers()<cr>')
+vim.cmd('nnoremap <leader>h <cmd>lua require("telescope.builtin").help_tags()<cr>')
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
-vim.cmd('nnoremap <leader>fn <cmd>TodoTelescope<cr>')
+vim.cmd('nnoremap <leader>t <cmd>TodoTelescope<cr>')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -82,3 +81,7 @@ vim.api.nvim_set_keymap("n", "<leader>gbf", ":GitBlameOpenFileURL<CR>", opts)
 
 -- markdown preview
 vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreview<CR>', opts)
+
+-- copy to clipboard
+vim.api.nvim_set_keymap('n', '<leader>y', '"+y', opts)
+vim.api.nvim_set_keymap('v', '<leader>y', '"+y', opts)

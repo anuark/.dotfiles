@@ -67,12 +67,6 @@ vim.cmd([[
 
 vim.g.airline_theme = 'atomic'
 
-vim.g.codestats_api_key = os.getenv("CODESTATS_TOKEN")
-
--- Optional: configure vim-airline to display status
--- let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
-
-
 -- Files opened on the top
 -- let g:airline#extensions#tabline#enabled = 1
 -- let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -82,3 +76,8 @@ vim.g.gitblame_enabled = false
 
 -- Transparent background
 vim.g.transparent_enabled = false
+
+-- netrw
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25

@@ -31,14 +31,14 @@ return require('packer').startup(function(use)
       'Everblush/everblush.nvim',
       as = 'everblush',
       config = function()
-    	  vim.cmd('colorscheme everblush')
+    	  -- vim.cmd('colorscheme everblush')
       end
     })
     use({
       'NLKNguyen/papercolor-theme',
       as = 'PaperColor',
       config = function()
-    	  -- vim.cmd('colorscheme PaperColor')
+    	  vim.cmd('colorscheme PaperColor')
       end
     })
     -- use({
@@ -64,7 +64,6 @@ return require('packer').startup(function(use)
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
-    use 'https://gitlab.com/code-stats/code-stats-vim.git'
     use 'pangloss/vim-javascript'
     use 'maxmellon/vim-jsx-pretty'
     use {
@@ -82,6 +81,7 @@ return require('packer').startup(function(use)
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'f-person/git-blame.nvim'
     use 'LuaLS/lua-language-server'
+    use 'folke/zen-mode.nvim'
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
