@@ -17,10 +17,12 @@ local on_attach = function(client, bufnr)
 
     -- LSP telescope
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', ':Telescope lsp_references<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gR', ':Telescope lsp_references<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', ':Telescope lsp_definitions<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', ':Telescope lsp_definitions<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gT', ':Telescope lsp_type_definitions<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', ':Telescope lsp_type_definitions<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', ':Telescope lsp_document_symbols<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gS', ':Telescope lsp_document_symbols<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gI', ':Telescope lsp_implementations<CR>', opts)
