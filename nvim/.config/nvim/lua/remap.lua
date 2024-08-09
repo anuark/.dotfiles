@@ -61,17 +61,17 @@ vim.cmd('nnoremap <leader>gg <cmd>lua require("telescope.builtin").live_grep()<c
 vim.cmd('nnoremap <leader>b <cmd>lua require("telescope.builtin").buffers()<cr>')
 vim.cmd('nnoremap <leader>h <cmd>lua require("telescope.builtin").help_tags()<cr>')
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
-vim.cmd('nnoremap <leader>t <cmd>TodoTelescope<cr>')
+vim.cmd('nnoremap <leader>tt <cmd>TodoLocList<cr>')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>gc", ":Telescope git_commits<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gd", ":Telescope git_bcommits<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>gc", ":Telescope git_commits<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>gd", ":Telescope git_bcommits<CR>", opts)
 -- vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", opts)
 
 -- gitblame
