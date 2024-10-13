@@ -1,23 +1,6 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
-
--- util = require "lspconfig/util"
--- require('lspconfig')['gopls'].setup {
---   cmd = {"gopls", "serve"},
---   filetypes = {"go", "gomod"},
---   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
---   settings = {
---     gopls = {
---       analyses = {
---         unusedparams = true,
---         composites = false,
---       },
---       staticcheck = true,
---     },
---   },
--- }
-
 require 'nvim-treesitter.configs'.setup {
     sync_install = false,
     ensure_install = {"help", "go", "javascript", "typescript", "rust", "lua"},
@@ -174,13 +157,20 @@ end
 vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
 
 local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
+local lazygitTerminal  = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
+local yaziTerminal  = Terminal:new({ cmd = "yazi", hidden = true, direction = 'float', count = 6 })
 
 function Lazygit_toggle()
-    lazygit:toggle()
+    lazygitTerminal:toggle()
+end
+
+function Yazi_toggle()
+    yaziTerminal:toggle()
 end
 
 vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua Yazi_toggle()<CR>", { noremap = true, silent = true })
 
 -- nvim-cmp.
 vim.opt.completeopt = "menu,menuone,noselect"
@@ -266,10 +256,10 @@ cmp.setup.filetype('gitcommit', {
 })
 
 -- trouble
-require'trouble'.setup()
-vim.keymap.set("n", "<leader>x", "<cmd>TroubleToggle<cr>",
-  {silent = true, noremap = true}
-)
+-- require'trouble'.setup()
+-- vim.keymap.set("n", "<leader>x", "<cmd>TroubleToggle<cr>",
+--   {silent = true, noremap = true}
+-- )
 -- vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
 --   {silent = true, noremap = true}
 -- )

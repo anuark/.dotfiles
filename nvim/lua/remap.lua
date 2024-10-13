@@ -50,18 +50,18 @@ vim.cmd('nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>')
 
 -- windows to close with "q"
 vim.api.nvim_create_autocmd(
-  "FileType",
-  { pattern = { "help", "startuptime", "qf", "lspinfo" }, command = [[nnoremap <buffer><silent> q :close<CR>]] }
+    "FileType",
+    { pattern = { "help", "startuptime", "qf", "lspinfo" }, command = [[nnoremap <buffer><silent> q :close<CR>]] }
 )
 vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
 -- telescope
 vim.cmd('nnoremap <C-p> <cmd>lua require("telescope.builtin").find_files()<cr>')
 vim.cmd('nnoremap <leader>gg <cmd>lua require("telescope.builtin").live_grep()<cr>')
-vim.cmd('nnoremap <leader>b <cmd>lua require("telescope.builtin").buffers()<cr>')
+vim.cmd('nnoremap <leader>bu <cmd>lua require("telescope.builtin").buffers()<cr>')
 vim.cmd('nnoremap <leader>h <cmd>lua require("telescope.builtin").help_tags()<cr>')
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
-vim.cmd('nnoremap <leader>tt <cmd>TodoLocList<cr>')
+vim.cmd('nnoremap <leader>tt <cmd>TodoTelescope<cr>')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -72,7 +72,9 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', op
 -- vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_branches<CR>", opts)
 -- vim.api.nvim_set_keymap("n", "<leader>gss", ":Telescope git_status<CR>", opts)
 -- vim.api.nvim_set_keymap("n", "<leader>gst", ":Telescope git_stash<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", opts)
+
+-- filebrowser 
+-- vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope file_browser<CR>", opts)
 
 -- gitblame
 vim.api.nvim_set_keymap("n", "<leader>gbb", ":GitBlameToggle<CR>", opts)
@@ -85,3 +87,9 @@ vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreview<CR>', opts)
 -- copy to clipboard
 vim.api.nvim_set_keymap('n', '<leader>y', '"+y', opts)
 vim.api.nvim_set_keymap('v', '<leader>y', '"+y', opts)
+
+-- remove all buffers
+vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", { desc = "Close all buffers but the current one" })
+
+-- g;
+vim.keymap.set("n", "<C-k>", "g;")

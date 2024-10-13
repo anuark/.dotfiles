@@ -13,13 +13,13 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- color themes
-    use {
-        'catppuccin/nvim',
-        as = 'catppuccin',
-        config =  function()
-            vim.cmd('colorscheme catppuccin')
-        end
-    }
+    -- use {
+    --     'catppuccin/nvim',
+    --     as = 'catppuccin',
+    --     config =  function()
+    --         vim.cmd('colorscheme catppuccin')
+    --     end
+    -- }
     -- use({
     --     'rose-pine/neovim',
     --     as = 'rose-pine',
@@ -31,14 +31,14 @@ return require('packer').startup(function(use)
     --   'Everblush/everblush.nvim',
     --   as = 'everblush',
     --   config = function()
-    -- 	  -- vim.cmd('colorscheme everblush')
+    -- 	  vim.cmd('colorscheme everblush')
     --   end
     -- })
     -- use({
     --   'NLKNguyen/papercolor-theme',
     --   as = 'PaperColor',
     --   config = function()
-    -- 	  -- vim.cmd('colorscheme PaperColor')
+    -- 	  vim.cmd('colorscheme PaperColor')
     --   end
     -- })
     -- use({
@@ -55,6 +55,12 @@ return require('packer').startup(function(use)
     --         require("patana.nvim").setup()
     --     end,
     -- }
+    use({
+        "scottmckendry/cyberdream.nvim",
+        config = function()
+            vim.cmd('colorscheme cyberdream')
+        end
+    })
 
     use 'neovim/nvim-lsp'
     use 'neovim/nvim-lspconfig'
@@ -110,6 +116,13 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
         }
+    }
+    use {
+        'goolord/alpha-nvim',
+        requires = { 'echasnovski/mini.icons' },
+        config = function()
+            require 'alpha'.setup(require 'alpha.themes.startify'.config)
+        end
     }
 
     require('set')
