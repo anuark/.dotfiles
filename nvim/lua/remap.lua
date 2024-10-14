@@ -37,11 +37,12 @@ vim.cmd('nnoremap <leader>r :LspRestart<CR>')
 -- Edit Config
 vim.cmd('nnoremap <Leader>vs :source ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
 vim.cmd('nnoremap <Leader>ve :vsplit ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
-vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/.config/nvim ~/.config/<CR>')
+vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/ ~/.config/nvim<CR>')
 
 -- Harpoon
 vim.cmd('nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>')
 vim.cmd('nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>')
+vim.cmd('nnoremap <silent><leader>e :lua require("harpoon.ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><C-h> :lua require("harpoon.ui").nav_file(1)<CR>')
 vim.cmd('nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>')
