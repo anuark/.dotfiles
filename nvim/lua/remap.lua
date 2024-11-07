@@ -35,8 +35,8 @@ vim.cmd([[
 vim.cmd('nnoremap <leader>r :LspRestart<CR>')
 
 -- Edit Config
-vim.cmd('nnoremap <Leader>vs :source ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
-vim.cmd('nnoremap <Leader>ve :vsplit ~/code/.dotfiles/nvim/.config/nvim/init.lua<CR>')
+vim.cmd('nnoremap <Leader>vs :source ~/code/.dotfiles/nvim/init.lua<CR>')
+vim.cmd('nnoremap <Leader>ve :vsplit ~/code/.dotfiles/nvim/init.lua<CR>')
 vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/ ~/.config/nvim<CR>')
 
 -- Harpoon
