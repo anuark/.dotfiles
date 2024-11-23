@@ -69,7 +69,7 @@ return require('packer').startup(function(use)
     use 'ThePrimeagen/harpoon'
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+        dependencies = { 'nvim-lua/plenary.nvim' }
     }
     use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-web-devicons'
@@ -123,6 +123,10 @@ return require('packer').startup(function(use)
         config = function()
             require 'alpha'.setup(require 'alpha.themes.startify'.config)
         end
+    }
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
 
     require('set')
