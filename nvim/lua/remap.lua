@@ -59,10 +59,10 @@ vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap 
 -- telescope
 vim.cmd('nnoremap <C-p> <cmd>lua require("telescope.builtin").find_files()<cr>')
 vim.cmd('nnoremap <leader>gg <cmd>lua require("telescope.builtin").live_grep()<cr>')
-vim.cmd('nnoremap <leader>bu <cmd>lua require("telescope.builtin").buffers()<cr>')
-vim.cmd('nnoremap <leader>h <cmd>lua require("telescope.builtin").help_tags()<cr>')
+vim.cmd('nnoremap <leader>fb <cmd>lua require("telescope.builtin").buffers()<cr>')
+vim.cmd('nnoremap <leader>fh <cmd>lua require("telescope.builtin").help_tags()<cr>')
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
-vim.cmd('nnoremap <leader>tt <cmd>TodoTelescope<cr>')
+vim.cmd('nnoremap <leader>ft <cmd>TodoTelescope<cr>')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
