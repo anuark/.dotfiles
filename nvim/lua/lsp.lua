@@ -74,7 +74,7 @@ local lspSetup = {
 local servers = {
     'pyright',
     'gopls',
-    'tsserver',
+    'ts_ls',
     'vimls',
     'eslint',
     'cssls',

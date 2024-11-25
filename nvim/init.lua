@@ -13,42 +13,42 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- color themes
-    -- use {
-    --     'catppuccin/nvim',
-    --     as = 'catppuccin',
-    --     config =  function()
-    --         vim.cmd('colorscheme catppuccin')
-    --     end
-    -- }
-    -- use({
-    --     'rose-pine/neovim',
-    --     as = 'rose-pine',
-    --     config = function()
-    --         -- vim.cmd('colorscheme rose-pine')
-    --     end
-    -- })
-    -- use({
-    --   'Everblush/everblush.nvim',
-    --   as = 'everblush',
-    --   config = function()
-    -- 	  vim.cmd('colorscheme everblush')
-    --   end
-    -- })
-    -- use({
-    --   'NLKNguyen/papercolor-theme',
-    --   as = 'PaperColor',
-    --   config = function()
-    -- 	  vim.cmd('colorscheme PaperColor')
-    --   end
-    -- })
-    -- use({
-    --   'sainnhe/everforest',
-    --   as = 'everforest',
-    --   config = function()
-    -- 	  -- vim.cmd('colorscheme everforest')
-    --   end
-    -- })
-    -- use 'rafi/awesome-vim-colorschemes'
+    use {
+        'catppuccin/nvim',
+        as = 'catppuccin',
+        config =  function()
+            -- vim.cmd('colorscheme catppuccin')
+        end
+    }
+    use({
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            -- vim.cmd('colorscheme rose-pine')
+        end
+    })
+    use({
+      'Everblush/everblush.nvim',
+      as = 'everblush',
+      config = function()
+    	  -- vim.cmd('colorscheme everblush')
+      end
+    })
+    use({
+      'NLKNguyen/papercolor-theme',
+      as = 'PaperColor',
+      config = function()
+    	  -- vim.cmd('colorscheme PaperColor')
+      end
+    })
+    use({
+        'sainnhe/everforest',
+        as = 'everforest',
+        config = function()
+            -- vim.cmd('colorscheme everforest')
+        end
+    })
+    use 'rafi/awesome-vim-colorschemes'
     -- use {
     --     "cvigilv/patana.nvim",
     --     config = function()
@@ -66,6 +66,7 @@ return require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
+    use 'nvim-lua/plenary.nvim'
     use 'ThePrimeagen/harpoon'
     use {
         'nvim-telescope/telescope.nvim',
@@ -125,8 +126,8 @@ return require('packer').startup(function(use)
         end
     }
     use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
 
     require('set')
