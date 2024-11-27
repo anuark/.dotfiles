@@ -38,7 +38,7 @@ return require('packer').startup(function(use)
       'NLKNguyen/papercolor-theme',
       as = 'PaperColor',
       config = function()
-    	  -- vim.cmd('colorscheme PaperColor')
+    	  vim.cmd('colorscheme PaperColor')
       end
     })
     use({
@@ -58,7 +58,7 @@ return require('packer').startup(function(use)
     use({
         "scottmckendry/cyberdream.nvim",
         config = function()
-            vim.cmd('colorscheme cyberdream')
+            -- vim.cmd('colorscheme cyberdream')
         end
     })
 
@@ -129,11 +129,21 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
+    -- use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
+    use {
+        'benlubas/molten-nvim',
+        run = ':UpdateRemotePlugins',
+        config = function()
+            vim.g.molten_output_win_max_height = 12
+        end
+    }
+    use { '3rd/image.nvim' }
 
     require('set')
     require('remap')
     require('plugins')
     require('lsp')
+    -- require('lualine_theme')
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
