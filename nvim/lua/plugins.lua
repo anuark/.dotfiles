@@ -3,7 +3,7 @@
 
 require 'nvim-treesitter.configs'.setup {
     sync_install = false,
-    ensure_install = {"help", "go", "javascript", "typescript", "rust", "lua"},
+    ensure_install = { "help", "go", "javascript", "typescript", "rust", "lua" },
     auto_install = true,
 
     highlight = {
@@ -15,10 +15,10 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 require 'treesitter-context'.setup {
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    enable = true,        -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
     trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+    patterns = {          -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
         -- For all filetypes
         -- Note that setting an entry here replaces all other patterns for this entry.
         -- By setting the 'default' entry below, you can control which nodes you want to
@@ -49,7 +49,7 @@ require 'treesitter-context'.setup {
     -- [!] The options below are exposed but shouldn't require your attention,
     --     you can safely ignore them.
 
-    zindex = 20, -- The Z-index of the context window
+    zindex = 20,     -- The Z-index of the context window
     mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
     separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
@@ -59,13 +59,13 @@ require('todo-comments').setup {
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
     highlight = {
-        before = "bg", -- "fg" or "bg" or empty
-        keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-        after = "fg", -- "fg" or "bg" or empty
+        before = "bg",                   -- "fg" or "bg" or empty
+        keyword = "wide",                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+        after = "fg",                    -- "fg" or "bg" or empty
         pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-        comments_only = true, -- uses treesitter to match keywords in comments only
-        max_line_len = 400, -- ignore lines longer than this
-        exclude = {}, -- list of file types to exclude highlighting
+        comments_only = true,            -- uses treesitter to match keywords in comments only
+        max_line_len = 400,              -- ignore lines longer than this
+        exclude = {},                    -- list of file types to exclude highlighting
     },
 }
 
@@ -88,15 +88,15 @@ require('telescope').setup {
             -- theme = "dropdown",
             prompt_prefix = "🔍 ",
             hidden = true,
-            file_ignore_patterns = {".git", "node_modules"}
+            file_ignore_patterns = { ".git", "node_modules" }
         }
     },
     extensions = {
         fzf = {
-            fuzzy = true, -- false will only do exact matching
+            fuzzy = true,                   -- false will only do exact matching
             override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+            override_file_sorter = true,    -- override the file sorter
+            case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
             hidden = true,
             -- the default case_mode is "smart_case"
         },
@@ -156,9 +156,9 @@ end
 
 vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
 
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygitTerminal  = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
-local yaziTerminal  = Terminal:new({ cmd = "yazi", hidden = true, direction = 'float', count = 6 })
+local Terminal        = require('toggleterm.terminal').Terminal
+local lazygitTerminal = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
+local yaziTerminal    = Terminal:new({ cmd = "yazi", hidden = true, direction = 'float', count = 6 })
 
 function Lazygit_toggle()
     lazygitTerminal:toggle()
@@ -178,22 +178,22 @@ local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-local cmp = require'cmp'
-local luasnip = require'luasnip'
-local lspkind = require'lspkind'
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 
 cmp.setup({
     formatting = {
         format = lspkind.cmp_format({
-          mode = 'symbol', -- show only symbol annotations
-          maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-          ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            mode = 'symbol',     -- show only symbol annotations
+            maxwidth = 50,       -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
-          -- The function below will be called before any actual modifications from lspkind
-          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-          -- before = function (entry, vim_item)
-          --   return vim_item
-          -- end
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            -- before = function (entry, vim_item)
+            --   return vim_item
+            -- end
         })
     },
     snippet = {
@@ -237,7 +237,7 @@ cmp.setup({
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'vsnip' }, -- For vsnip users.
+        { name = 'vsnip' },   -- For vsnip users.
         { name = 'luasnip' }, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
         -- { name = 'snippy' }, -- For snippy users.
@@ -296,3 +296,36 @@ require('lualine').setup({
         theme = 'everforest'
     }
 })
+
+-- molten
+-- I find auto open annoying, keep in mind setting this option will require setting
+-- a keybind for `:noautocmd MoltenEnterOutput` to open the output again
+vim.g.molten_auto_open_output = false
+
+-- this guide will be using image.nvim
+-- Don't forget to setup and install the plugin if you want to view image outputs
+-- vim.g.molten_image_provider = "image.nvim"
+
+-- optional, I like wrapping. works for virt text and the output window
+vim.g.molten_wrap_output = true
+
+-- Output as virtual text. Allows outputs to always be shown, works with images, but can
+-- be buggy with longer images
+vim.g.molten_virt_text_output = true
+
+-- this will make it so the output shows up below the \`\`\` cell delimiter
+vim.g.molten_virt_lines_off_by_1 = true
+vim.g.molten_enter_output_behavior = 'open_and_enter'
+
+
+vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
+vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>", { desc = "molten init", silent = true })
+vim.keymap.set("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
+vim.keymap.set("n", "<leader>mr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
+vim.keymap.set("n", "<leader>r", ":MoltenEvaluateLine<CR>", { desc = "execute line", silent = true })
+vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "execute visual selection", silent = true })
+vim.keymap.set("n", "<leader>oh", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
+vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
+vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "show/enter output" })
+
+vim.keymap.set("n", "<leader>mx", ":MoltenOpenInBrowser<CR>", { desc = "open output in browser", silent = true })
