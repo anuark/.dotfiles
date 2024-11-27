@@ -65,6 +65,8 @@ vim.cmd([[
     endif
 ]])
 
+vim.cmd("let g:python3_host_prog = '/Users/anuarkilgore/python/bin/python3'")
+
 vim.g.airline_theme = 'atomic'
 
 -- Files opened on the top
