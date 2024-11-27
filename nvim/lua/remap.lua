@@ -32,7 +32,7 @@ vim.cmd([[
 ]])
 
 -- LSP
-vim.cmd('nnoremap <leader>r :LspRestart<CR>')
+-- vim.cmd('nnoremap <leader>r :LspRestart<CR>')
 
 -- Edit Config
 vim.cmd('nnoremap <Leader>vs :source ~/code/.dotfiles/nvim/init.lua<CR>')
@@ -42,7 +42,6 @@ vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/ ~/.config/nvim<CR>')
 -- Harpoon
 vim.cmd('nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>')
 vim.cmd('nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>')
-vim.cmd('nnoremap <silent><leader>e :lua require("harpoon.ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><C-h> :lua require("harpoon.ui").nav_file(1)<CR>')
 vim.cmd('nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>')
@@ -94,3 +93,13 @@ vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", { desc = "Close all buffers
 
 -- g;
 vim.keymap.set("n", "<C-k>", "g;")
+
+-- magma
+-- vim.g.magma_image_provider = 'kitty'
+-- vim.cmd('nnoremap <expr><silent> <LocalLeader>r  nvim_exec("MagmaEvaluateOperator", v:true)')
+-- vim.cmd('nnoremap <silent>       <LocalLeader>rr :MagmaEvaluateLine<CR>')
+-- vim.cmd('xnoremap <silent>       <LocalLeader>r  :<C-u>MagmaEvaluateVisual<CR>')
+-- vim.cmd('nnoremap <silent>       <LocalLeader>rc :MagmaReevaluateCell<CR>')
+
+-- molten
+
