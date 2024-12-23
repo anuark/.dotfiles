@@ -100,23 +100,23 @@ require('telescope').setup {
             hidden = true,
             -- the default case_mode is "smart_case"
         },
-        file_browser = {
-            -- theme = "ivy",
-            hijack_netrw = true,
-            hidden = true,
-            -- mappings = {
-            --     ["i"] = {
-            --         -- your custom insert mode mappings
-            --     },
-            --     ["n"] = {
-            --         -- your custom normal mode mappings
-            --     },
-            -- },
-        },
+        -- file_browser = {
+        --     -- theme = "ivy",
+        --     hijack_netrw = true,
+        --     hidden = true,
+        --     -- mappings = {
+        --     --     ["i"] = {
+        --     --         -- your custom insert mode mappings
+        --     --     },
+        --     --     ["n"] = {
+        --     --         -- your custom normal mode mappings
+        --     --     },
+        --     -- },
+        -- },
     },
 }
 require('telescope').load_extension('fzf')
-require('telescope').load_extension('file_browser')
+-- require('telescope').load_extension('file_browser')
 -- require('telescope').load_extension('emoji')
 
 require('toggleterm').setup {

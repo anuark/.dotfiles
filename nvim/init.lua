@@ -13,52 +13,47 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- color themes
-    use {
-        'catppuccin/nvim',
-        as = 'catppuccin',
-        config =  function()
-            -- vim.cmd('colorscheme catppuccin')
-        end
-    }
-    use({
-        'rose-pine/neovim',
-        as = 'rose-pine',
-        config = function()
-            -- vim.cmd('colorscheme rose-pine')
-        end
-    })
-    use({
-      'Everblush/everblush.nvim',
-      as = 'everblush',
-      config = function()
-    	  -- vim.cmd('colorscheme everblush')
-      end
-    })
-    use({
-      'NLKNguyen/papercolor-theme',
-      as = 'PaperColor',
-      config = function()
-    	  vim.cmd('colorscheme PaperColor')
-      end
-    })
-    use({
-        'sainnhe/everforest',
-        as = 'everforest',
-        config = function()
-            -- vim.cmd('colorscheme everforest')
-        end
-    })
-    use 'rafi/awesome-vim-colorschemes'
     -- use {
-    --     "cvigilv/patana.nvim",
-    --     config = function()
-    --         require("patana.nvim").setup()
-    --     end,
+    --     'catppuccin/nvim',
+    --     as = 'catppuccin',
+    --     config =  function()
+    --         -- vim.cmd('colorscheme catppuccin')
+    --     end
     -- }
+    -- use({
+    --     'rose-pine/neovim',
+    --     as = 'rose-pine',
+    --     config = function()
+    --         -- vim.cmd('colorscheme rose-pine')
+    --     end
+    -- })
+    -- use({
+    --   'Everblush/everblush.nvim',
+    --   as = 'everblush',
+    --   config = function()
+    -- 	  -- vim.cmd('colorscheme everblush')
+    --   end
+    -- })
+    -- use({
+    --   'NLKNguyen/papercolor-theme',
+    --   as = 'PaperColor',
+    --   config = function()
+    -- 	  vim.cmd('colorscheme PaperColor')
+    --   end
+    -- })
+    -- use({
+    --     'sainnhe/everforest',
+    --     as = 'everforest',
+    --     config = function()
+    --         -- vim.cmd('colorscheme everforest')
+    --     end
+    -- })
+    -- use 'rafi/awesome-vim-colorschemes'
     use({
         "scottmckendry/cyberdream.nvim",
+        opt = false,
         config = function()
-            -- vim.cmd('colorscheme cyberdream')
+            vim.cmd('colorscheme cyberdream')
         end
     })
 
@@ -72,29 +67,29 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' }
     }
-    use 'nvim-telescope/telescope-file-browser.nvim'
+    -- use 'nvim-telescope/telescope-file-browser.nvim'
     use 'kyazdani42/nvim-web-devicons'
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
-    use 'pangloss/vim-javascript'
-    use 'maxmellon/vim-jsx-pretty'
-    use {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
-    }
+    -- use 'pangloss/vim-javascript'
+    -- use 'maxmellon/vim-jsx-pretty'
+    -- use {
+    --     "folke/trouble.nvim",
+    --     dependencies = { "nvim-tree/nvim-web-devicons" },
+    --     opts = {
+    --         -- your configuration comes here
+    --         -- or leave it empty to use the default settings
+    --         -- refer to the configuration section below
+    --     },
+    -- }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-context'
-    use 'folke/todo-comments.nvim'
+    -- use 'folke/todo-comments.nvim'
     use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
     use 'f-person/git-blame.nvim'
     use 'LuaLS/lua-language-server'
-    use 'folke/zen-mode.nvim'
+    -- use 'folke/zen-mode.nvim'
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
@@ -125,24 +120,23 @@ return require('packer').startup(function(use)
             require 'alpha'.setup(require 'alpha.themes.startify'.config)
         end
     }
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
-    -- use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
-    use {
-        'benlubas/molten-nvim',
-        run = ':UpdateRemotePlugins',
-        config = function()
-            vim.g.molten_output_win_max_height = 12
-        end
-    }
-    use { '3rd/image.nvim' }
+    -- use {
+    --     'nvim-lualine/lualine.nvim',
+    --     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    -- }
+    -- use {
+    --     'benlubas/molten-nvim',
+    --     run = ':UpdateRemotePlugins',
+    --     config = function()
+    --         vim.g.molten_output_win_max_height = 12
+    --     end
+    -- }
 
     require('set')
     require('remap')
     require('plugins')
     require('lsp')
+    -- require('cyberdream_colorscheme')
     -- require('lualine_theme')
 
     -- Automatically set up your configuration after cloning packer.nvim

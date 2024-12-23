@@ -94,12 +94,3 @@ vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", { desc = "Close all buffers
 -- g;
 vim.keymap.set("n", "<C-k>", "g;")
 
--- magma
--- vim.g.magma_image_provider = 'kitty'
--- vim.cmd('nnoremap <expr><silent> <LocalLeader>r  nvim_exec("MagmaEvaluateOperator", v:true)')
--- vim.cmd('nnoremap <silent>       <LocalLeader>rr :MagmaEvaluateLine<CR>')
--- vim.cmd('xnoremap <silent>       <LocalLeader>r  :<C-u>MagmaEvaluateVisual<CR>')
--- vim.cmd('nnoremap <silent>       <LocalLeader>rc :MagmaReevaluateCell<CR>')
-
--- molten
-
