@@ -54,20 +54,20 @@ require 'treesitter-context'.setup {
     separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
 
-require('todo-comments').setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    highlight = {
-        before = "bg",                   -- "fg" or "bg" or empty
-        keyword = "wide",                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-        after = "fg",                    -- "fg" or "bg" or empty
-        pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-        comments_only = true,            -- uses treesitter to match keywords in comments only
-        max_line_len = 400,              -- ignore lines longer than this
-        exclude = {},                    -- list of file types to exclude highlighting
-    },
-}
+-- require('todo-comments').setup {
+--     -- your configuration comes here
+--     -- or leave it empty to use the default settings
+--     -- refer to the configuration section below
+--     highlight = {
+--         before = "bg",                   -- "fg" or "bg" or empty
+--         keyword = "wide",                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+--         after = "fg",                    -- "fg" or "bg" or empty
+--         pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+--         comments_only = true,            -- uses treesitter to match keywords in comments only
+--         max_line_len = 400,              -- ignore lines longer than this
+--         exclude = {},                    -- list of file types to exclude highlighting
+--     },
+-- }
 
 require('telescope').setup {
     defaults = {
@@ -276,26 +276,26 @@ cmp.setup.filetype('gitcommit', {
 --   {silent = true, noremap = true}
 -- )
 
-require("zen-mode").setup {
-    window = {
-        width = 90,
-        options = {
-            number = true,
-            relativenumber = true,
-        }
-    },
-}
+-- require("zen-mode").setup {
+--     window = {
+--         width = 90,
+--         options = {
+--             number = true,
+--             relativenumber = true,
+--         }
+--     },
+-- }
+-- 
+-- vim.keymap.set("n", "<leader>zz", function()
+--     require("zen-mode").toggle()
+--     vim.wo.wrap = false
+-- end)
 
-vim.keymap.set("n", "<leader>zz", function()
-    require("zen-mode").toggle()
-    vim.wo.wrap = false
-end)
-
-require('lualine').setup({
-    options = {
-        theme = 'everforest'
-    }
-})
+-- require('lualine').setup({
+--     options = {
+--         theme = 'everforest'
+--     }
+-- })
 
 -- molten
 -- I find auto open annoying, keep in mind setting this option will require setting
