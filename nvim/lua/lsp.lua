@@ -91,7 +91,9 @@ local servers = {
     'intelephense',
     'rust_analyzer',
     'solc',
-    'tailwindcss'
+    'tailwindcss',
+    'html',
+    'htmx'
 }
 
 for _, lsp in pairs(servers) do

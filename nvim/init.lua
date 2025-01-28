@@ -120,17 +120,17 @@ return require('packer').startup(function(use)
             require 'alpha'.setup(require 'alpha.themes.startify'.config)
         end
     }
-    -- use {
-    --     'nvim-lualine/lualine.nvim',
-    --     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    -- }
-    -- use {
-    --     'benlubas/molten-nvim',
-    --     run = ':UpdateRemotePlugins',
-    --     config = function()
-    --         vim.g.molten_output_win_max_height = 12
-    --     end
-    -- }
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
+    use {
+        'benlubas/molten-nvim',
+        run = ':UpdateRemotePlugins',
+        config = function()
+            vim.g.molten_output_win_max_height = 12
+        end
+    }
 
     require('set')
     require('remap')
