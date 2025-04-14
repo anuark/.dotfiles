@@ -317,9 +317,8 @@ vim.g.molten_virt_text_output = true
 vim.g.molten_virt_lines_off_by_1 = true
 vim.g.molten_enter_output_behavior = 'open_and_enter'
 
-
 vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
-vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>", { desc = "molten init", silent = true })
+vim.keymap.set("n", "<leader>mi", ":MoltenInterrupt<CR>", { desc = "molten interrupt", silent = true })
 vim.keymap.set("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
 vim.keymap.set("n", "<leader>mr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
 vim.keymap.set("n", "<leader>r", ":MoltenEvaluateLine<CR>", { desc = "execute line", silent = true })
