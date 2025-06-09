@@ -93,7 +93,8 @@ local servers = {
     'solc',
     'tailwindcss',
     'html',
-    'htmx'
+    -- 'htmx',
+    'csharp_ls'
 }
 
 for _, lsp in pairs(servers) do
