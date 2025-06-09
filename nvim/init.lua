@@ -131,6 +131,12 @@ return require('packer').startup(function(use)
             vim.g.molten_output_win_max_height = 12
         end
     }
+    use({
+        "stevearc/oil.nvim",
+        config = function()
+            require("oil").setup()
+        end,
+    })
 
     require('set')
     require('remap')
