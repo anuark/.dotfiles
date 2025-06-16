@@ -13,42 +13,42 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- color themes
-    -- use {
-    --     'catppuccin/nvim',
-    --     as = 'catppuccin',
-    --     config =  function()
-    --         -- vim.cmd('colorscheme catppuccin')
-    --     end
-    -- }
-    -- use({
-    --     'rose-pine/neovim',
-    --     as = 'rose-pine',
-    --     config = function()
-    --         -- vim.cmd('colorscheme rose-pine')
-    --     end
-    -- })
-    -- use({
-    --   'Everblush/everblush.nvim',
-    --   as = 'everblush',
-    --   config = function()
-    -- 	  -- vim.cmd('colorscheme everblush')
-    --   end
-    -- })
-    -- use({
-    --   'NLKNguyen/papercolor-theme',
-    --   as = 'PaperColor',
-    --   config = function()
-    -- 	  vim.cmd('colorscheme PaperColor')
-    --   end
-    -- })
-    -- use({
-    --     'sainnhe/everforest',
-    --     as = 'everforest',
-    --     config = function()
-    --         -- vim.cmd('colorscheme everforest')
-    --     end
-    -- })
-    -- use 'rafi/awesome-vim-colorschemes'
+    use {
+        'catppuccin/nvim',
+        as = 'catppuccin',
+        config =  function()
+            -- vim.cmd('colorscheme catppuccin')
+        end
+    }
+    use({
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            -- vim.cmd('colorscheme rose-pine')
+        end
+    })
+    use({
+      'Everblush/everblush.nvim',
+      as = 'everblush',
+      config = function()
+    	  -- vim.cmd('colorscheme everblush')
+      end
+    })
+    use({
+      'NLKNguyen/papercolor-theme',
+      as = 'PaperColor',
+      config = function()
+    	  vim.cmd('colorscheme PaperColor')
+      end
+    })
+    use({
+        'sainnhe/everforest',
+        as = 'everforest',
+        config = function()
+            -- vim.cmd('colorscheme everforest')
+        end
+    })
+    use 'rafi/awesome-vim-colorschemes'
     use({
         "scottmckendry/cyberdream.nvim",
         opt = false,
@@ -128,7 +128,7 @@ return require('packer').startup(function(use)
         'benlubas/molten-nvim',
         run = ':UpdateRemotePlugins',
         config = function()
-            vim.g.molten_output_win_max_height = 12
+            vim.g.molten_output_win_max_height = 16
         end
     }
     use({
