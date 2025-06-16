@@ -86,7 +86,7 @@ local servers = {
     'vimls',
     'eslint',
     'cssls',
-    'jsonls',
+    -- 'jsonls',
     'lua_ls',
     'intelephense',
     'rust_analyzer',

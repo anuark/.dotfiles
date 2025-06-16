@@ -16,7 +16,7 @@ return require('packer').startup(function(use)
     use {
         'catppuccin/nvim',
         as = 'catppuccin',
-        config =  function()
+        config = function()
             -- vim.cmd('colorscheme catppuccin')
         end
     }
@@ -28,18 +28,18 @@ return require('packer').startup(function(use)
         end
     })
     use({
-      'Everblush/everblush.nvim',
-      as = 'everblush',
-      config = function()
-    	  -- vim.cmd('colorscheme everblush')
-      end
+        'Everblush/everblush.nvim',
+        as = 'everblush',
+        config = function()
+            -- vim.cmd('colorscheme everblush')
+        end
     })
     use({
-      'NLKNguyen/papercolor-theme',
-      as = 'PaperColor',
-      config = function()
-    	  vim.cmd('colorscheme PaperColor')
-      end
+        'NLKNguyen/papercolor-theme',
+        as = 'PaperColor',
+        config = function()
+            vim.cmd('colorscheme PaperColor')
+        end
     })
     use({
         'sainnhe/everforest',
@@ -132,10 +132,16 @@ return require('packer').startup(function(use)
         end
     }
     use({
-        "stevearc/oil.nvim",
+        'stevearc/oil.nvim',
         config = function()
             require("oil").setup()
         end,
+    })
+    use({
+        'nvzone/floaterm',
+        requires = { 'nvzone/volt' },
+        opts = {},
+        -- cmd = "FloatermToggle",
     })
 
     require('set')

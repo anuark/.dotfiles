@@ -96,3 +96,6 @@ vim.keymap.set("n", "<C-k>", "g;")
 
 -- oil.nvim
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+-- floatterm
+-- vim.keymap.set("n", "<C-\\>", "<CMD>FloatermToggle<CR>", { desc = "Open Floaterm" })

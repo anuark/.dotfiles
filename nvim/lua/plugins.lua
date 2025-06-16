@@ -120,12 +120,12 @@ require('telescope').load_extension('fzf')
 -- require('telescope').load_extension('emoji')
 
 require('toggleterm').setup {
-    size = 20,
+    size = 16,
     open_mapping = [[<c-\>]],
-    direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float',
+    direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float',
     auto_scroll = false,
     winbar = {
-        enabled = false,
+        enabled = true,
         name_formatter = function(term) --  term: Terminal
             return term.name
         end
@@ -138,7 +138,7 @@ require('toggleterm').setup {
         -- not natively supported but implemented in this plugin.
         border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
         -- like `size`, width and height can be a number or function which is passed the current terminal
-        -- winblend = 3,
+        winblend = 5,
     },
 }
 
@@ -158,19 +158,18 @@ vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
 
 local Terminal        = require('toggleterm.terminal').Terminal
 local lazygitTerminal = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float', count = 5 })
-local yaziTerminal    = Terminal:new({ cmd = "yazi", hidden = true, direction = 'float', count = 6 })
+-- local yaziTerminal    = Terminal:new({ cmd = "yazi", hidden = true, direction = 'float', count = 6 })
 
 function Lazygit_toggle()
     lazygitTerminal:toggle()
 end
 
-function Yazi_toggle()
-    yaziTerminal:toggle()
-end
+-- function Yazi_toggle()
+--     yaziTerminal:toggle()
+-- end
 
 vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua Lazygit_toggle()<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua Yazi_toggle()<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua Yazi_toggle()<CR>", { noremap = true, silent = true })
 
 -- nvim-cmp.
 vim.opt.completeopt = "menu,menuone,noselect"
