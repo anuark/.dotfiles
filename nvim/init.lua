@@ -38,7 +38,7 @@ return require('packer').startup(function(use)
         'NLKNguyen/papercolor-theme',
         as = 'PaperColor',
         config = function()
-            vim.cmd('colorscheme PaperColor')
+            -- vim.cmd('colorscheme PaperColor')
         end
     })
     use({
@@ -53,7 +53,13 @@ return require('packer').startup(function(use)
         "scottmckendry/cyberdream.nvim",
         opt = false,
         config = function()
-            vim.cmd('colorscheme cyberdream')
+            -- vim.cmd('colorscheme cyberdream')
+        end
+    })
+    use({
+        'folke/tokyonight.nvim',
+        config = function()
+            vim.cmd('colorscheme tokyonight')
         end
     })
 
