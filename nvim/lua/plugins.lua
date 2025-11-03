@@ -138,7 +138,7 @@ require('toggleterm').setup {
         -- not natively supported but implemented in this plugin.
         border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
         -- like `size`, width and height can be a number or function which is passed the current terminal
-        winblend = 5,
+        -- winblend = 5,
     },
 }
 

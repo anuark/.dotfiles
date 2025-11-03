@@ -61,6 +61,7 @@ vim.cmd('nnoremap <leader>gg <cmd>lua require("telescope.builtin").live_grep()<c
 vim.cmd('nnoremap <leader>fb <cmd>lua require("telescope.builtin").buffers()<cr>')
 vim.cmd('nnoremap <leader>fh <cmd>lua require("telescope.builtin").help_tags()<cr>')
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
+vim.cmd('nnoremap <leader>fq <cmd>lua require("telescope.builtin").quickfix()<cr>')
 vim.cmd('nnoremap <leader>ft <cmd>TodoTelescope<cr>')
 
 local opts = { noremap = true, silent = true }
@@ -99,3 +100,8 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- floatterm
 -- vim.keymap.set("n", "<C-\\>", "<CMD>FloatermToggle<CR>", { desc = "Open Floaterm" })
+
+-- quickfix
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
+

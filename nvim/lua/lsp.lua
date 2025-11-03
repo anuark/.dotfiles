@@ -94,13 +94,13 @@ local servers = {
     'tailwindcss',
     'html',
     -- 'htmx',
-    'csharp_ls'
+    'csharp_ls',
+    'ruff' --python
 }
 
 for _, lsp in pairs(servers) do
-    require('lspconfig')[lsp].setup(lspSetup)
-    -- require('lspconfig')[lsp].setup(coq.lsp_ensure_capabilities(lspSetup))
-    -- require('lspconfig')[lsp].setup(coq.lsp_ensure_capabilities())
+    vim.lsp.config(lsp, lspSetup)
+    vim.lsp.enable(lsp)
 end
 
 -- autoimports for golang

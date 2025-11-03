@@ -53,13 +53,13 @@ return require('packer').startup(function(use)
         "scottmckendry/cyberdream.nvim",
         opt = false,
         config = function()
-            -- vim.cmd('colorscheme cyberdream')
+            vim.cmd('colorscheme cyberdream')
         end
     })
     use({
         'folke/tokyonight.nvim',
         config = function()
-            vim.cmd('colorscheme tokyonight')
+            -- vim.cmd('colorscheme tokyonight')
         end
     })
 
@@ -137,18 +137,14 @@ return require('packer').startup(function(use)
             vim.g.molten_output_win_max_height = 16
         end
     }
-    use({
-        'stevearc/oil.nvim',
-        config = function()
-            require("oil").setup()
-        end,
-    })
+    use({ 'stevearc/oil.nvim' })
     use({
         'nvzone/floaterm',
         requires = { 'nvzone/volt' },
         opts = {},
         -- cmd = "FloatermToggle",
     })
+    use 'preservim/nerdcommenter'
 
     require('set')
     require('remap')
