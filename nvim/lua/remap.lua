@@ -63,6 +63,7 @@ vim.cmd('nnoremap <leader>fh <cmd>lua require("telescope.builtin").help_tags()<c
 vim.cmd('nnoremap <leader>fd <cmd>lua require("telescope.builtin").diagnostics()<cr>')
 vim.cmd('nnoremap <leader>fq <cmd>lua require("telescope.builtin").quickfix()<cr>')
 vim.cmd('nnoremap <leader>ft <cmd>TodoTelescope<cr>')
+vim.cmd('nnoremap <leader>fw <cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<cr>')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)

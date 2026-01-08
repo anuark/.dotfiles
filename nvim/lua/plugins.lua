@@ -118,6 +118,7 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 -- require('telescope').load_extension('file_browser')
 -- require('telescope').load_extension('emoji')
+require("telescope").load_extension("git_worktree")
 
 require('toggleterm').setup {
     size = 16,
