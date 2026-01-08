@@ -715,9 +715,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- stylua: ignore start
         local keymap = vim.keymap.set
         local lsp = vim.lsp
-        local opts = { silent = true }
         local function opt(desc, others)
-            return vim.tbl_extend("force", opts, { desc = desc }, others or {})
+            return vim.tbl_extend("force", { silent = true }, { desc = desc }, others or {})
         end
         keymap("n", "gd", lsp.buf.definition, opt("Go to definition"))
         keymap("n", "gD", function()
@@ -729,7 +728,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         keymap("n", "gi", function() lsp.buf.implementation({ border = "single" }) end, opt("Go to implementation"))
         keymap("n", "gr", lsp.buf.references, opt("Show References"))
         keymap("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
-        keymap("n", "<C-k>", lsp.buf.signature_help, opts)
+        keymap("n", "<C-k>", lsp.buf.signature_help, { silent = true })
         -- disable the default binding first before using a custom one
         pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
         keymap("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end,
