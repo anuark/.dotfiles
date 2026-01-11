@@ -135,11 +135,48 @@ vim.cmd('nnoremap <silent><C-h> :lua require("harpoon.ui").nav_file(1)<CR>')
 vim.cmd('nnoremap <silent><C-t> :lua require("harpoon.ui").nav_file(2)<CR>')
 vim.cmd('nnoremap <silent><C-n> :lua require("harpoon.ui").nav_file(3)<CR>')
 vim.cmd('nnoremap <silent><C-s> :lua require("harpoon.ui").nav_file(4)<CR>')
+-- TODO: use on keymap function
 
+-- gitblame
+vim.api.nvim_set_keymap("n", "<leader>gbb", ":GitBlameToggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gbc", ":GitBlameOpenCommitURL<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gbf", ":GitBlameOpenFileURL<CR>", opts)
+vim.g.gitblame_enabled = false
 
 -- lazy.nvim
 require("lazy").setup({
     spec = {
+        -- {{ Colorschemes
+        {
+            'catppuccin/nvim',
+            name = 'catppuccin',
+        },
+        {
+            'rose-pine/neovim',
+            name = 'rose-pine',
+        },
+        {
+            'Everblush/everblush.nvim',
+            name = 'everblush',
+        },
+        {
+            'NLKNguyen/papercolor-theme',
+            as = 'PaperColor',
+        },
+        {
+            'sainnhe/everforest',
+            as = 'everforest',
+            config = function()
+                vim.cmd('colorscheme everforest')
+            end
+        },
+        {
+            'scottmckendry/cyberdream.nvim',
+            priority = 1000,
+            config = function()
+                -- vim.cmd([[colorscheme cyberdream]])
+            end,
+        },
         {
             'scottmckendry/cyberdream.nvim',
             priority = 1000,
@@ -147,12 +184,13 @@ require("lazy").setup({
                 vim.cmd([[colorscheme cyberdream]])
             end,
         },
-        -- {
-        --     "rebelot/kanagawa.nvim",
-        --     config = function()
-        --         vim.cmd.colorscheme("kanagawa-wave")
-        --     end
-        -- },
+        {
+            "rebelot/kanagawa.nvim",
+            config = function()
+                -- vim.cmd.colorscheme("kanagawa-wave")
+            end
+        },
+        -- }}
         {
             'saghen/blink.cmp',
             dependencies = { 'rafamadriz/friendly-snippets' },
@@ -202,13 +240,14 @@ require("lazy").setup({
                 },
             },
         },
+        -- { "fei6409/log-highlight.nvim", event = "BufRead *.log", opts = {} },
         {
             'nvim-treesitter/nvim-treesitter',
-            build = ":TSUpdate | :TSEnable highlight",
-            cmd = { "TSUpdateSync", "TSUpdate", "TSInstall", "TSInstallInfo", "TSEnable", "TSDisable", "TSModuleInfo" },
+            lazy = false,
+            build = ":TSUpdate",
             opts_extend = { "ensure_installed" },
             opts = {
-                sync_install = false,
+                sync_install = true,
                 ensure_install = { "help", "go", "javascript", "typescript", "rust", "lua", "regex", "css", "html", "latex", "norg", "scss", "svelte", "tsx", "typst", "vue", "markdown_inline", "markdown" },
                 auto_install = true,
 
@@ -218,7 +257,7 @@ require("lazy").setup({
                 indent = {
                     enable = true,
                 },
-            }
+            },
         },
         {
             'nvim-treesitter/nvim-treesitter-context',
@@ -258,13 +297,14 @@ require("lazy").setup({
                 separator = '-',
             },
         },
-        { 'stevearc/oil.nvim', opts = {} },
+        { 'stevearc/oil.nvim',      opts = {} },
         {
             "ThePrimeagen/harpoon",
             branch = "master",
             dependencies = { "nvim-lua/plenary.nvim" },
             opts = {}
         },
+        { 'f-person/git-blame.nvim' },
         -- {
         --     "folke/which-key.nvim",
         --     event = "VeryLazy",
@@ -365,7 +405,7 @@ require("lazy").setup({
                 { "gD",              function() Snacks.picker.lsp_declarations() end,      desc = "Goto Declaration" },
                 { "gr",              function() Snacks.picker.lsp_references() end,        nowait = true,                     desc = "References" },
                 { "gI",              function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
-                { "gy",              function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
+                { "gt",              function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
                 { "gai",             function() Snacks.picker.lsp_incoming_calls() end,    desc = "C[a]lls Incoming" },
                 { "gao",             function() Snacks.picker.lsp_outgoing_calls() end,    desc = "C[a]lls Outgoing" },
                 { "<leader>ss",      function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
@@ -788,57 +828,63 @@ vim.lsp.enable("lua_ls")
 -- }}}
 
 -- Python {{{
-vim.lsp.config.basedpyright = {
-    name = "basedpyright",
+-- vim.lsp.config.basedpyright = {
+--     name = "basedpyright",
+--     filetypes = { "python" },
+--     cmd = { "basedpyright-langserver", "--stdio" },
+--     settings = {
+--         python = {
+--             venvPath = vim.fn.expand("~") .. "/.virtualenvs",
+--         },
+--         basedpyright = {
+--             disableOrganizeImports = true,
+--             analysis = {
+--                 autoSearchPaths = true,
+--                 autoImportCompletions = true,
+--                 useLibraryCodeForTypes = true,
+--                 diagnosticMode = "openFilesOnly",
+--                 typeCheckingMode = "strict",
+--                 inlayHints = {
+--                     variableTypes = true,
+--                     callArgumentNames = true,
+--                     functionReturnTypes = true,
+--                     genericTypes = false,
+--                 },
+--             },
+--         },
+--     },
+-- }
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "python",
+--     callback = function()
+--         local ok, venv = pcall(require, "rj.extras.venv")
+--         if ok then
+--             venv.setup()
+--         end
+--         local root = vim.fs.root(0, {
+--             "pyproject.toml",
+--             "setup.py",
+--             "setup.cfg",
+--             "requirements.txt",
+--             "Pipfile",
+--             "pyrightconfig.json",
+--             ".git",
+--             vim.uv.cwd(),
+--         })
+--         local client =
+--             vim.lsp.start(vim.tbl_extend("force", vim.lsp.config.basedpyright, { root_dir = root }), { attach = false })
+--         if client then
+--             vim.lsp.buf_attach_client(0, client)
+--         end
+--     end,
+-- })
+vim.lsp.config.ruff = {
+    cmd = { "ruff", "server" },
     filetypes = { "python" },
-    cmd = { "basedpyright-langserver", "--stdio" },
-    settings = {
-        python = {
-            venvPath = vim.fn.expand("~") .. "/.virtualenvs",
-        },
-        basedpyright = {
-            disableOrganizeImports = true,
-            analysis = {
-                autoSearchPaths = true,
-                autoImportCompletions = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = "openFilesOnly",
-                typeCheckingMode = "strict",
-                inlayHints = {
-                    variableTypes = true,
-                    callArgumentNames = true,
-                    functionReturnTypes = true,
-                    genericTypes = false,
-                },
-            },
-        },
-    },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
 }
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
-    callback = function()
-        local ok, venv = pcall(require, "rj.extras.venv")
-        if ok then
-            venv.setup()
-        end
-        local root = vim.fs.root(0, {
-            "pyproject.toml",
-            "setup.py",
-            "setup.cfg",
-            "requirements.txt",
-            "Pipfile",
-            "pyrightconfig.json",
-            ".git",
-            vim.uv.cwd(),
-        })
-        local client =
-            vim.lsp.start(vim.tbl_extend("force", vim.lsp.config.basedpyright, { root_dir = root }), { attach = false })
-        if client then
-            vim.lsp.buf_attach_client(0, client)
-        end
-    end,
-})
+vim.lsp.enable('ruff')
 -- }}}
 
 -- Go {{{
@@ -1049,7 +1095,19 @@ vim.lsp.config.intelephense = {
 }
 -- }}}
 
-vim.lsp.enable({ "ts_ls", "cssls", "tailwindcssls", "htmlls", "intelephense" })
+-- Svelte {{{
+vim.lsp.config.svelte = {
+    cmd = { "svelteserver", "--stdio" },
+    filetypes = { "svelte" },
+    root_markers = { "svelte.config.js", "tsconfig.json", "package.json", ".git" },
+
+    init_options = {
+        hostInfo = "neovim",
+    },
+}
+-- }}}
+
+vim.lsp.enable({ "ts_ls", "cssls", "tailwindcssls", "htmlls", "intelephense", "svelte" })
 
 -- }}}
 
@@ -1124,3 +1182,9 @@ vim.api.nvim_create_user_command("LspInfo", function()
 end, {
     desc = "Get all the information about all LSP attached",
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'go', 'php', 'css', 'html', 'js', 'ts', 'json', 'svelte', 'jsx', 'rust', 'py', 'lua', 'c' },
+    callback = function() vim.treesitter.start() end,
+})
+
