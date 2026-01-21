@@ -150,32 +150,30 @@ require("lazy").setup({
         {
             'catppuccin/nvim',
             name = 'catppuccin',
+            priority = 1000,
         },
         {
             'rose-pine/neovim',
             name = 'rose-pine',
+            priority = 1000,
         },
         {
             'Everblush/everblush.nvim',
             name = 'everblush',
+            priority = 1000,
         },
         {
             'NLKNguyen/papercolor-theme',
-            as = 'PaperColor',
+            name = 'PaperColor',
+            priority = 1000,
         },
         {
             'sainnhe/everforest',
-            as = 'everforest',
-            config = function()
-                vim.cmd('colorscheme everforest')
-            end
-        },
-        {
-            'scottmckendry/cyberdream.nvim',
+            name = 'everforest',
             priority = 1000,
-            config = function()
-                -- vim.cmd([[colorscheme cyberdream]])
-            end,
+            -- config = function()
+            --     vim.cmd('colorscheme everforest')
+            -- end
         },
         {
             'scottmckendry/cyberdream.nvim',
@@ -186,9 +184,10 @@ require("lazy").setup({
         },
         {
             "rebelot/kanagawa.nvim",
-            config = function()
-                -- vim.cmd.colorscheme("kanagawa-wave")
-            end
+            priority = 1000,
+            -- config = function()
+            --     vim.cmd.colorscheme("kanagawa-wave")
+            -- end
         },
         -- }}
         {
@@ -217,6 +216,8 @@ require("lazy").setup({
                         "fallback",
                     },
                     ["<CR>"] = { "accept", "fallback" },
+                    -- ['<C-space>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+                    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
                 },
                 appearance = {
                     nerd_font_variant = 'mono'
@@ -323,6 +324,27 @@ require("lazy").setup({
         --     },
         -- },
         {
+            "folke/edgy.nvim",
+            ---@module 'edgy'
+            ---@param opts Edgy.Config
+            opts = function(_, opts)
+                for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
+                    opts[pos] = opts[pos] or {}
+                    table.insert(opts[pos], {
+                        ft = "snacks_terminal",
+                        size = { height = 0.4 },
+                        title = "%{b:snacks_terminal.id}: %{b:term_title}",
+                        filter = function(_buf, win)
+                            return vim.w[win].snacks_win
+                                and vim.w[win].snacks_win.position == pos
+                                and vim.w[win].snacks_win.relative == "editor"
+                                and not vim.w[win].trouble_preview
+                        end,
+                    })
+                end
+            end,
+        },
+        {
             "folke/snacks.nvim",
             priority = 1000,
             lazy = false,
@@ -332,7 +354,7 @@ require("lazy").setup({
                 dashboard = { enabled = true },
                 explorer = { enabled = true },
                 indent = { enabled = true },
-                image = { enabled = true },
+                image = { enabled = false },
                 input = { enabled = true },
                 lazygit = { enabled = true },
                 picker = { enabled = true },
@@ -408,8 +430,8 @@ require("lazy").setup({
                 { "gt",              function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
                 { "gai",             function() Snacks.picker.lsp_incoming_calls() end,    desc = "C[a]lls Incoming" },
                 { "gao",             function() Snacks.picker.lsp_outgoing_calls() end,    desc = "C[a]lls Outgoing" },
-                { "<leader>ss",      function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
-                { "<leader>sS",      function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+                { "<leader>gs",      function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+                { "<leader>gS",      function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
                 -- search
                 { '<leader>s"',      function() Snacks.picker.registers() end,             desc = "Registers" },
                 { '<leader>s/',      function() Snacks.picker.search_history() end,        desc = "Search History" },
@@ -417,8 +439,8 @@ require("lazy").setup({
                 { "<leader>sb",      function() Snacks.picker.lines() end,                 desc = "Buffer Lines" },
                 { "<leader>sc",      function() Snacks.picker.command_history() end,       desc = "Command History" },
                 { "<leader>sC",      function() Snacks.picker.commands() end,              desc = "Commands" },
-                { "<leader>sd",      function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
-                { "<leader>sD",      function() Snacks.picker.diagnostics_buffer() end,    desc = "Buffer Diagnostics" },
+                { "<leader>gi",      function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
+                { "<leader>gI",      function() Snacks.picker.diagnostics_buffer() end,    desc = "Buffer Diagnostics" },
                 { "<leader>sh",      function() Snacks.picker.help() end,                  desc = "Help Pages" },
                 { "<leader>sH",      function() Snacks.picker.highlights() end,            desc = "Highlights" },
                 { "<leader>si",      function() Snacks.picker.icons() end,                 desc = "Icons" },
@@ -474,167 +496,6 @@ require("lazy").setup({
     -- automatically check for plugin updates
     checker = { enabled = true },
 })
-
-
--- vim.lsp.config['luals'] = {
---     -- Command and arguments to start the server.
---     cmd = { 'lua-language-server' },
---
---     -- Filetypes to automatically attach to.
---     filetypes = { 'lua' },
---
---     -- Sets the "root directory" to the parent directory of the file in the
---     -- current buffer that contains either a ".luarc.json" or a
---     -- ".luarc.jsonc" file. Files that share a root directory will reuse
---     -- the connection to the same LSP server.
---     -- Nested lists indicate equal priority, see |vim.lsp.Config|.
---     root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
---
---     -- Specific settings to send to the server. The schema for this is
---     -- defined by the server. For example the schema for lua-language-server
---     -- can be found here https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json
---     settings = {
---         Lua = {
---             runtime = {
---                 version = 'LuaJIT',
---             }
---         }
---     }
--- }
--- vim.lsp.enable('luals')
-
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- local lspSetup = {
---     on_attach = on_attach,
---     flags = {
---         -- This will be the default in neovim 0.7+
---         debounce_text_changes = 150,
---         composites = false,
---     },
---     settings = {
---         gopls = {
---             analyses = {
---                 unusedparams = true,
---                 composites = false,
---             },
---             staticcheck = true,
---         },
---         Lua = {
---             diagnostics = {
---                 globals = { 'vim' }
---             }
---         },
---         ["rust-analyzer"] = {
---             diagnostics = {
---                 enabled = true,
---                 disabled = { "unresolved-proc-macro" },
---                 enableExperimental = true
---             }
---         },
---         python = {
---             analysis = {
---                 diagnosticSeverityOverrides = {
---                     reportUnusedExpression = "none",
---                 },
---             },
---         },
---     },
---     capabilities = capabilities
--- }
-
--- vim.lsp.config('*', {
---   root_markers = { '.git' },
--- })
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- -- capabilities.textDocument.semanticTokens.semanticTokens.multilineTokenSupport= true
--- vim.lsp.config('*', {
---   on_attach = on_attach,
---   capabilities = capabilities
--- })
---
--- local servers = {
---     -- pyright = {
---     --     settings = {
---     --     }
---     -- },
---     -- gopls = {
---     --    gopls = {
---     --        analyses = {
---     --            unusedparams = true,
---     --            composites = false,
---     --        },
---     --        staticcheck = true,
---     --    },
---     -- },
---     -- ts_ls = {},
---     -- vimls = {},
---     -- eslint = {},
---     -- cssls = {},
---     lua_ls = {
---         Lua = {
---             diagnostics = {
---                 globals = { 'vim' }
---             }
---         },
---     },
--- --     intelephense = {},
--- --     rust_analyzer = {
--- --         ["rust-analyzer"] = {
--- --             diagnostics = {
--- --                 enabled = true,
--- --                 disabled = { "unresolved-proc-macro" },
--- --                 enableExperimental = true
--- --             }
--- --         },
--- --     },
--- --     solc = {},
--- --     tailwindcss = {},
--- --     html = {},
--- --     csharp_ls = {},
--- --     ruff = { -- python
--- --         python = {
--- --             analysis = {
--- --                 diagnosticSeverityOverrides = {
--- --                     reportUnusedExpression = "none",
--- --                 },
--- --             },
--- --         },
--- --     },
--- }
---
--- for lsp, config in pairs(servers) do
---     vim.lsp.config(lsp, config)
---     vim.lsp.enable(lsp)
--- end
-
--- autoimports for golang
--- vim.api.nvim_create_autocmd("BufWritePre", {
---     pattern = "*.go",
---     callback = function()
---         local params = vim.lsp.util.make_range_params()
---         params.context = { only = { "source.organizeImports" } }
---         -- buf_request_sync defaults to a 1000ms timeout. Depending on your
---         -- machine and codebase, you may want longer. Add an additional
---         -- argument after params if you find that you have to write the file
---         -- twice for changes to be saved.
---         -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
---         local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
---         for cid, res in pairs(result or {}) do
---             for _, r in pairs(res.result or {}) do
---                 if r.edit then
---                     local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
---                     vim.lsp.util.apply_workspace_edit(r.edit, enc)
---                 end
---             end
---         end
---         vim.lsp.buf.format({ async = false })
---     end
--- })
-
-
--- Initially taken from [NTBBloodbath](https://github.com/NTBBloodbath/nvim/blob/main/lua/core/lsp.lua)
--- modified almost 80% by me
 
 -- Diagnostics {{{
 local config = {
@@ -791,7 +652,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 for _, cur_client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
                     diag.populate_workspace_diagnostics(cur_client, 0)
                 end
-                vim.notify("INFO: Diagnostic populated")
+                Snacks.notify.info("INFO: Diagnostic populated")
             end
         end, opt("Popluate diagnostic for the whole workspace"))
         -- keymap("n", "<Leader>dn", function() vim.diagnostic.jump({ count = 1, float = true }) end, opt("Next Diagnostic"))
@@ -828,33 +689,43 @@ vim.lsp.enable("lua_ls")
 -- }}}
 
 -- Python {{{
--- vim.lsp.config.basedpyright = {
---     name = "basedpyright",
---     filetypes = { "python" },
---     cmd = { "basedpyright-langserver", "--stdio" },
---     settings = {
---         python = {
---             venvPath = vim.fn.expand("~") .. "/.virtualenvs",
---         },
---         basedpyright = {
---             disableOrganizeImports = true,
---             analysis = {
---                 autoSearchPaths = true,
---                 autoImportCompletions = true,
---                 useLibraryCodeForTypes = true,
---                 diagnosticMode = "openFilesOnly",
---                 typeCheckingMode = "strict",
---                 inlayHints = {
---                     variableTypes = true,
---                     callArgumentNames = true,
---                     functionReturnTypes = true,
---                     genericTypes = false,
---                 },
---             },
---         },
---     },
--- }
---
+vim.lsp.config.pyright = {
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    -- on_attach = function(client, bufnr)
+    --     vim.api.nvim_buf_create_user_command(bufnr, 'LspPyrightOrganizeImports', function()
+    --         local params = {
+    --             command = 'pyright.organizeimports',
+    --             arguments = { vim.uri_from_bufnr(bufnr) },
+    --         }
+
+    --         -- Using client.request() directly because "pyright.organizeimports" is private
+    --         -- (not advertised via capabilities), which client:exec_cmd() refuses to call.
+    --         -- https://github.com/neovim/neovim/blob/c333d64663d3b6e0dd9aa440e433d346af4a3d81/runtime/lua/vim/lsp/client.lua#L1024-L1030
+    --         ---@diagnostic disable-next-line: param-type-mismatch
+    --         client.request('workspace/executeCommand', params, nil, bufnr)
+    --     end, {
+    --         desc = 'Organize Imports',
+    --     })
+    --     vim.api.nvim_buf_create_user_command(bufnr, 'LspPyrightSetPythonPath', set_python_path, {
+    --         desc = 'Reconfigure pyright with the provided python path',
+    --         nargs = 1,
+    --         complete = 'file',
+    --     })
+    -- end,
+    root_markers = { "pyrightconfig.json", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git", "uv.lock" },
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true
+            }
+        }
+    },
+}
+vim.lsp.enable('pyright')
+
 -- vim.api.nvim_create_autocmd("FileType", {
 --     pattern = "python",
 --     callback = function()
@@ -879,12 +750,12 @@ vim.lsp.enable("lua_ls")
 --         end
 --     end,
 -- })
-vim.lsp.config.ruff = {
-    cmd = { "ruff", "server" },
-    filetypes = { "python" },
-    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
-}
-vim.lsp.enable('ruff')
+-- vim.lsp.config.ruff = {
+--     cmd = { "ruff", "server" },
+--     filetypes = { "python" },
+--     root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+-- }
+-- vim.lsp.enable('ruff')
 -- }}}
 
 -- Go {{{
@@ -1121,6 +992,7 @@ vim.api.nvim_create_user_command("LspStop", function(opts)
         if opts.args == "" or opts.args == client.name then
             client:stop(true)
             vim.notify(client.name .. ": stopped")
+            Snacks.notify.info(client.name .. ": stopped")
         end
     end
 end, {
@@ -1146,6 +1018,7 @@ vim.api.nvim_create_user_command("LspRestart", function()
     end
     local timer = vim.uv.new_timer()
     if not timer then
+        Snacks.notify.info("Servers are stopped but havent been restarted")
         return vim.notify("Servers are stopped but havent been restarted")
     end
     timer:start(
@@ -1158,7 +1031,7 @@ vim.api.nvim_create_user_command("LspRestart", function()
                     for _, buf in ipairs(client[2]) do
                         vim.lsp.buf_attach_client(buf, client_id)
                     end
-                    vim.notify(name .. ": restarted")
+                    Snacks.notify.info(name .. ": restarted")
                 end
                 detach_clients[name] = nil
             end
@@ -1188,3 +1061,26 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function() vim.treesitter.start() end,
 })
 
+-- autoimports for golang
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+        local params = vim.lsp.util.make_range_params()
+        params.context = { only = { "source.organizeImports" } }
+        -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+        -- machine and codebase, you may want longer. Add an additional
+        -- argument after params if you find that you have to write the file
+        -- twice for changes to be saved.
+        -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+        for cid, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+                if r.edit then
+                    local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                    vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
+            end
+        end
+        vim.lsp.buf.format({ async = false })
+    end
+})
