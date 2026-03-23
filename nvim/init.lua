@@ -102,8 +102,8 @@ vim.cmd('nnoremap <Leader>vc :!cp -a ~/code/.dotfiles/nvim/ ~/.config/nvim<CR>')
 
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+-- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 -- windows to close with "q"
 vim.api.nvim_create_autocmd(
@@ -119,9 +119,6 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', op
 -- copy to clipboard
 vim.api.nvim_set_keymap('n', '<leader>y', '"+y', opts)
 vim.api.nvim_set_keymap('v', '<leader>y', '"+y', opts)
-
--- g;
-vim.keymap.set("n", "<C-k>", "g;")
 
 -- quickfix
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
@@ -143,6 +140,50 @@ vim.api.nvim_set_keymap("n", "<leader>gbc", ":GitBlameOpenCommitURL<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>gbf", ":GitBlameOpenFileURL<CR>", opts)
 vim.g.gitblame_enabled = false
 
+-- toggle quickfix list
+vim.keymap.set("n", "<leader>q", function()
+    for _, win in ipairs(vim.fn.getwininfo()) do
+        if win.quickfix == 1 then
+            vim.cmd("cclose")
+            return
+        end
+    end
+    vim.cmd("copen")
+end, { desc = "Toggle quickfix" })
+
+-- molten
+-- I find auto open annoying, keep in mind setting this option will require setting
+-- a keybind for `:noautocmd MoltenEnterOutput` to open the output again
+vim.g.molten_auto_open_output = false
+
+-- this guide will be using image.nvim
+-- Don't forget to setup and install the plugin if you want to view image outputs
+-- vim.g.molten_image_provider = "image.nvim"
+
+-- optional, I like wrapping. works for virt text and the output window
+vim.g.molten_wrap_output = true
+
+-- Output as virtual text. Allows outputs to always be shown, works with images, but can
+-- be buggy with longer images
+vim.g.molten_virt_text_output = true
+
+-- this will make it so the output shows up below the \`\`\` cell delimiter
+vim.g.molten_virt_lines_off_by_1 = true
+vim.g.molten_enter_output_behavior = 'open_and_enter'
+
+-- TODO: use lazy to set keybindings
+vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
+vim.keymap.set("n", "<leader>mi", ":MoltenInterrupt<CR>", { desc = "molten interrupt", silent = true })
+vim.keymap.set("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
+vim.keymap.set("n", "<leader>mr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
+vim.keymap.set("n", "<leader>r", ":MoltenEvaluateLine<CR>", { desc = "execute line", silent = true })
+vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "execute visual selection", silent = true })
+vim.keymap.set("n", "<leader>oh", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
+vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
+vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "show/enter output" })
+vim.keymap.set("n", "<leader>mx", ":MoltenOpenInBrowser<CR>", { desc = "open output in browser", silent = true })
+
+
 -- lazy.nvim
 require("lazy").setup({
     spec = {
@@ -161,6 +202,9 @@ require("lazy").setup({
             'Everblush/everblush.nvim',
             name = 'everblush',
             priority = 1000,
+            config = function()
+                vim.cmd('colorscheme everblush')
+            end
         },
         {
             'NLKNguyen/papercolor-theme',
@@ -178,9 +222,9 @@ require("lazy").setup({
         {
             'scottmckendry/cyberdream.nvim',
             priority = 1000,
-            config = function()
-                vim.cmd([[colorscheme cyberdream]])
-            end,
+            -- config = function()
+            --     vim.cmd([[colorscheme cyberdream]])
+            -- end,
         },
         {
             "rebelot/kanagawa.nvim",
@@ -190,6 +234,19 @@ require("lazy").setup({
             -- end
         },
         -- }}
+        {
+            'nvim-lualine/lualine.nvim',
+            dependencies = { 'nvim-tree/nvim-web-devicons' }
+        },
+        {
+            "benlubas/molten-nvim",
+            version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+            build = ":UpdateRemotePlugins",
+            init = function()
+                -- this is an example, not a default. Please see the readme for more configuration options
+                vim.g.molten_output_win_max_height = 16
+            end,
+        },
         {
             'saghen/blink.cmp',
             dependencies = { 'rafamadriz/friendly-snippets' },
@@ -298,7 +355,17 @@ require("lazy").setup({
                 separator = '-',
             },
         },
-        { 'stevearc/oil.nvim',      opts = {} },
+        {
+            'stevearc/oil.nvim',
+            opts = {
+                columns = {
+                    "icon",
+                    -- "permissions",
+                    "size",
+                    "mtime",
+                }
+            }
+        },
         {
             "ThePrimeagen/harpoon",
             branch = "master",
@@ -634,16 +701,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
         pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
         keymap("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end,
             opt("Toggle hover"))
-        keymap("n", "<Leader>lF", vim.cmd.FormatToggle, opt("Toggle AutoFormat"))
-        keymap("n", "<Leader>lI", vim.cmd.Mason, opt("Mason"))
-        keymap("n", "<Leader>lS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
+        -- keymap("n", "<Leader>lF", vim.cmd.FormatToggle, opt("Toggle AutoFormat"))
+        -- keymap("n", "<Leader>lI", vim.cmd.Mason, opt("Mason"))
+        -- keymap("n", "<Leader>lS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
         keymap("n", "<Leader>la", lsp.buf.code_action, opt("Code Action"))
         keymap("n", "<Leader>lh", function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({})) end,
             opt("Toggle Inlayhints"))
         keymap("n", "<Leader>li", vim.cmd.LspInfo, opt("LspInfo"))
         keymap("n", "<Leader>ll", lsp.codelens.run, opt("Run CodeLens"))
         keymap("n", "<Leader>lr", lsp.buf.rename, opt("Rename"))
-        keymap("n", "<Leader>ls", lsp.buf.document_symbol, opt("Doument Symbols"))
+        -- keymap("n", "<Leader>ls", lsp.buf.document_symbol, opt("Doument Symbols"))
 
         -- diagnostic mappings
         keymap("n", "<Leader>dD", function()
@@ -1083,4 +1150,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         end
         vim.lsp.buf.format({ async = false })
     end
+})
+
+-- require('lualine_theme')
+require('lualine').setup({
+    options = {
+        theme = 'auto'
+    }
 })
