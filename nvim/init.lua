@@ -202,9 +202,9 @@ require("lazy").setup({
             'Everblush/everblush.nvim',
             name = 'everblush',
             priority = 1000,
-            config = function()
-                vim.cmd('colorscheme everblush')
-            end
+            -- config = function()
+            --     vim.cmd('colorscheme everblush')
+            -- end
         },
         {
             'NLKNguyen/papercolor-theme',
@@ -233,6 +233,13 @@ require("lazy").setup({
             --     vim.cmd.colorscheme("kanagawa-wave")
             -- end
         },
+        {
+            "navarasu/onedark.nvim",
+            priority = 1000,
+            config = function()
+                vim.cmd.colorscheme("onedark")
+            end
+        },
         -- }}
         {
             'nvim-lualine/lualine.nvim',
@@ -243,7 +250,6 @@ require("lazy").setup({
             version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
             build = ":UpdateRemotePlugins",
             init = function()
-                -- this is an example, not a default. Please see the readme for more configuration options
                 vim.g.molten_output_win_max_height = 16
             end,
         },
@@ -355,6 +361,25 @@ require("lazy").setup({
                 separator = '-',
             },
         },
+        -- Need to learn more about this plugin
+        -- {
+        --     "nvim-treesitter/nvim-treesitter-textobjects",
+        --     branch = "main",
+        --     init = function()
+        --         -- Disable entire built-in ftplugin mappings to avoid conflicts.
+        --         -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+        --         vim.g.no_plugin_maps = true
+
+        --         -- Or, disable per filetype (add as you like)
+        --         -- vim.g.no_python_maps = true
+        --         -- vim.g.no_ruby_maps = true
+        --         -- vim.g.no_rust_maps = true
+        --         -- vim.g.no_go_maps = true
+        --     end,
+        --     config = function()
+        --         -- put your config here
+        --     end,
+        -- },
         {
             'stevearc/oil.nvim',
             opts = {
@@ -410,6 +435,30 @@ require("lazy").setup({
                     })
                 end
             end,
+        },
+        {
+            "coder/claudecode.nvim",
+            dependencies = { "folke/snacks.nvim" },
+            config = true,
+            keys = {
+                { "<leader>a",  nil,                              desc = "AI/Claude Code" },
+                { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
+                { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+                { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
+                { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+                { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+                { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
+                { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
+                {
+                    "<leader>as",
+                    "<cmd>ClaudeCodeTreeAdd<cr>",
+                    desc = "Add file",
+                    ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+                },
+                -- Diff management
+                { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+                { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+            },
         },
         {
             "folke/snacks.nvim",
@@ -508,10 +557,10 @@ require("lazy").setup({
                 { "<leader>sC",      function() Snacks.picker.commands() end,              desc = "Commands" },
                 { "<leader>gi",      function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
                 { "<leader>gI",      function() Snacks.picker.diagnostics_buffer() end,    desc = "Buffer Diagnostics" },
-                { "<leader>sh",      function() Snacks.picker.help() end,                  desc = "Help Pages" },
-                { "<leader>sH",      function() Snacks.picker.highlights() end,            desc = "Highlights" },
-                { "<leader>si",      function() Snacks.picker.icons() end,                 desc = "Icons" },
-                { "<leader>sj",      function() Snacks.picker.jumps() end,                 desc = "Jumps" },
+                { "<leader>fh",      function() Snacks.picker.help() end,                  desc = "Help Pages" },
+                { "<leader>fH",      function() Snacks.picker.highlights() end,            desc = "Highlights" },
+                { "<leader>fi",      function() Snacks.picker.icons() end,                 desc = "Icons" },
+                { "<leader>fj",      function() Snacks.picker.jumps() end,                 desc = "Jumps" },
                 { "<leader>sk",      function() Snacks.picker.keymaps() end,               desc = "Keymaps" },
                 { "<leader>sl",      function() Snacks.picker.loclist() end,               desc = "Location List" },
                 { "<leader>sm",      function() Snacks.picker.marks() end,                 desc = "Marks" },
