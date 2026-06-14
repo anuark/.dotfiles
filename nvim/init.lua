@@ -125,7 +125,7 @@ vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
 -- Harpoon
-vim.cmd('nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>')
+vim.cmd('nnoremap <silent><C-a> :lua require("harpoon.mark").add_file()<CR>')
 vim.cmd('nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>')
 vim.cmd('nnoremap <silent><C-h> :lua require("harpoon.ui").nav_file(1)<CR>')
@@ -170,6 +170,13 @@ vim.g.molten_virt_text_output = true
 -- this will make it so the output shows up below the \`\`\` cell delimiter
 vim.g.molten_virt_lines_off_by_1 = true
 vim.g.molten_enter_output_behavior = 'open_and_enter'
+
+-- folke/edgy.nvim
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+-- Default splitting will cause your main splits to jump when opening an edgebar.
+-- To prevent this, set `splitkeep` to either `screen` or `topline`.
+vim.opt.splitkeep = "screen"
 
 -- TODO: use lazy to set keybindings
 vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
@@ -419,6 +426,7 @@ require("lazy").setup({
             "folke/edgy.nvim",
             ---@module 'edgy'
             ---@param opts Edgy.Config
+            event = "VeryLazy",
             opts = function(_, opts)
                 for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
                     opts[pos] = opts[pos] or {}
@@ -440,6 +448,54 @@ require("lazy").setup({
             "coder/claudecode.nvim",
             dependencies = { "folke/snacks.nvim" },
             config = true,
+            opts = {
+                -- Server Configuration
+                port_range = { min = 10000, max = 65535 },
+                auto_start = true,
+                log_level = "info", -- "trace", "debug", "info", "warn", "error"
+                terminal_cmd = nil, -- Custom terminal command (default: "claude")
+                -- For local installations: "~/.claude/local/claude"
+                -- For native binary: use output from 'which claude'
+
+                -- Send/Focus Behavior
+                -- When true, successful sends will focus the Claude terminal if already connected
+                focus_after_send = true,
+
+                -- Selection Tracking
+                track_selection = true,
+                visual_demotion_delay_ms = 50,
+
+                -- Terminal Configuration
+                terminal = {
+                    split_side = "right", -- "left" or "right"
+                    split_width_percentage = 0.45,
+                    provider = "auto", -- "auto", "snacks", "native", "external", "none", or custom provider table
+                    auto_close = true,
+                    snacks_win_opts = {}, -- Opts to pass to `Snacks.terminal.open()` - see Floating Window section below
+
+                    -- Provider-specific options
+                    provider_opts = {
+                        -- Command for external terminal provider. Can be:
+                        -- 1. String with %s placeholder: "alacritty -e %s" (backward compatible)
+                        -- 2. String with two %s placeholders: "alacritty --working-directory %s -e %s" (cwd, command)
+                        -- 3. Function returning command: function(cmd, env) return "alacritty -e " .. cmd end
+                        external_terminal_cmd = nil,
+                    },
+                },
+
+                -- Diff Integration
+                diff_opts = {
+                    layout = "vertical", -- "vertical" or "horizontal"
+                    open_in_new_tab = false,
+                    keep_terminal_focus = false, -- If true, moves focus back to terminal after diff opens
+                    hide_terminal_in_new_tab = false,
+                    -- on_new_file_reject = "keep_empty", -- "keep_empty" or "close_window"
+
+                    -- Legacy aliases (still supported):
+                    -- vertical_split = true,
+                    -- open_in_current_tab = true,
+                },
+            },
             keys = {
                 { "<leader>a",  nil,                              desc = "AI/Claude Code" },
                 { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
@@ -504,7 +560,7 @@ require("lazy").setup({
                             end
                         end,
                         term_normal = {
-                            "`",
+                            "<esc>",
                             function(self)
                                 self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
                                 if self.esc_timer:is_active() then
