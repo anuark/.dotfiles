@@ -1,0 +1,7 @@
+# Loaded only when lazygit is opened from nvim (see LG_CONFIG_FILE in init.lua)
+customCommands:
+  - key: "<space>"
+    context: "worktrees"
+    description: "Switch to worktree (and cd nvim)"
+    command: nvim --server "$NVIM" --remote-expr "v:lua.LazygitCd('{{.SelectedWorktree.Path}}')"
+    output: none

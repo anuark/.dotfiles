@@ -190,6 +190,22 @@ vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten c
 vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "show/enter output" })
 vim.keymap.set("n", "<leader>mx", ":MoltenOpenInBrowser<CR>", { desc = "open output in browser", silent = true })
 
+-- lazygit opened from nvim also loads nvim/lazygit.yml, whose <space> in the worktrees panel calls LazygitCd
+-- ponytail: hardcoded macOS lazygit config path (`lazygit -cd`), fine while these dotfiles are mac-only
+vim.env.LG_CONFIG_FILE = vim.fn.expand("~/Library/Application Support/lazygit/config.yml") .. "," .. vim.fn.stdpath("config") .. "/lazygit.yml"
+function _G.LazygitCd(dir)
+    vim.schedule(function()
+        local old = Snacks.terminal.get({ "lazygit" }, { create = false })
+        vim.cmd.cd(dir)
+        if old then
+            vim.api.nvim_clear_autocmds({ event = "TermClose", group = old.augroup }) -- skip snacks' "exited with code -1" error
+            vim.api.nvim_buf_delete(old.buf, { force = true })
+        end
+        Snacks.lazygit() -- reopen lazygit in the new cwd
+        vim.notify("cwd → " .. dir)
+    end)
+end
+
 
 -- lazy.nvim
 require("lazy").setup({
