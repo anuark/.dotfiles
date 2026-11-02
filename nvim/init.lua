@@ -534,6 +534,18 @@ require("lazy").setup({
             },
         },
         {
+            "nickjvandyke/opencode.nvim", -- main branch = OpenCode v2
+            dependencies = { "folke/snacks.nvim" },
+            config = function()
+                vim.g.opencode_opts = {}
+                local oc = function() return require("opencode") end
+                vim.keymap.set({ "n", "x" }, "<leader>Oa", function() oc().ask("@this: ") end, { desc = "Ask opencode" })
+                vim.keymap.set({ "n", "x" }, "<leader>Ox", function() oc().select() end, { desc = "opencode actions" })
+                vim.keymap.set({ "n", "x" }, "<leader>Os", function() return oc().operator("@this") end, { desc = "Send range to opencode", expr = true })
+                vim.keymap.set("n", "<leader>Oss", function() return oc().operator("@this") .. "_" end, { desc = "Send line to opencode", expr = true })
+            end,
+        },
+        {
             "folke/snacks.nvim",
             priority = 1000,
             lazy = false,
